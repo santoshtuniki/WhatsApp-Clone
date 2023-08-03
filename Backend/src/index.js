@@ -1,0 +1,1 @@
+console.log("Welcome from a NodeJS App")
