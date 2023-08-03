@@ -1,6 +1,7 @@
 // module imports
 import express from 'express';
 import dotenv from 'dotenv';
+import createHttpError from 'http-errors';
 
 // middleware imports
 import morgan from 'morgan';
@@ -55,7 +56,23 @@ app.get('/', (req, res) => {
 
 // Test route
 app.post('/test', (req, res) => {
-    res.end(`Hi ${req.body.name}`)
+    // res.end(`Hi ${req.body.name}`)
+    throw createHttpError.BadGateway('This route has an error')
+})
+
+// error handling
+app.use(async (req, res, next) => {
+    next(createHttpError.NotFound('This route does not exists'))
+})
+
+app.use(async (err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send({
+        error: {
+            'status': err.status,
+            'message': err.message
+        }
+    })
 })
 
 // Default export

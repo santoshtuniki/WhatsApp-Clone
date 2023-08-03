@@ -5,14 +5,14 @@ import logger from './configs/logger.config.js';
 
 // env variables
 const PORT = process.env.PORT || 8000;
-console.log(process.env.NODE_ENV)
+console.log('env: ', process.env.NODE_ENV);
 
 let server;
 
 // listen on port
 server = app.listen(PORT, () => {
     logger.info(`Server is listening to PORT ${PORT}...`);
-    console.log('process id: ', process.pid);
+    // console.log('process id: ', process.pid);
     // throw new Error('error in server..')
 })
 
