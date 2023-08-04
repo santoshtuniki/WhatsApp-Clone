@@ -1,6 +1,6 @@
 // module imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // component imports
 import Home from './pages/Home';
@@ -10,6 +10,8 @@ import { logout } from './features/userSlice';
 
 function App() {
 	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.user);
+	console.log('user: ', user);
 
 	return (
 		<div className='dark'>
