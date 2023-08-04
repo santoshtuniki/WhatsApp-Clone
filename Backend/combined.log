@@ -12,3 +12,102 @@
 {"level":"info","message":"Server is listening to PORT 8000..."}
 {"level":"info","message":"Server is listening to PORT 8000..."}
 {"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"error","message":"ReferenceError: logger is not defined\n    at dbConnect (file:///home/saisantosh-d/Desktop/WhatsApp%20Clone/Backend/src/database/db.connect.js:15:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000..."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"error","message":"MongoParseError: Invalid scheme, expected connection string to start with \"mongodb://\" or \"mongodb+srv://\"\n    at new ConnectionString (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongodb-connection-string-url/lib/index.js:86:19)\n    at parseOptions (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongodb/lib/connection_string.js:191:17)\n    at new MongoClient (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongodb/lib/mongo_client.js:48:63)\n    at NativeConnection.createClient (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongoose/lib/drivers/node-mongodb-native/connection.js:288:14)\n    at NativeConnection.openUri (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongoose/lib/connection.js:738:34)\n    at Mongoose.connect (/home/saisantosh-d/Desktop/WhatsApp Clone/Backend/node_modules/mongoose/lib/index.js:404:15)\n    at dbConnect (file:///home/saisantosh-d/Desktop/WhatsApp%20Clone/Backend/src/index.js:17:24)\n    at file:///home/saisantosh-d/Desktop/WhatsApp%20Clone/Backend/src/index.js:26:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}
+{"level":"info","message":"Server is listening to PORT 8000."}
+{"level":"info","message":"Connected to Mongodb"}

@@ -7,10 +7,13 @@ import createHttpError from 'http-errors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
-import cookieParser from "cookie-parser";
+import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
+
+// component imports
+import routes from './routes/index.js';
 
 // dotEnv config
 dotenv.config();
@@ -46,8 +49,11 @@ app.use(fileUpload({ useTempFiles: true }));
 
 // cors - Protect and restrict access to server
 app.use(cors({
-    origin: "http://localhost:3000"
+    origin: 'http://localhost:3000'
 }));
+
+// api v1 routes
+app.use('/api/v1', routes);
 
 // Home route
 app.get('/', (req, res) => {
