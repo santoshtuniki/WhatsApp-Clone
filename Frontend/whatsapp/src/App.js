@@ -1,14 +1,19 @@
 // module imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // component imports
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import { logout } from './features/userSlice';
 
 function App() {
+	const dispatch = useDispatch();
+
 	return (
 		<div className='dark'>
+			<button onClick={() => { dispatch(logout()) }}>Logout</button>
 			<Router>
 				<Routes>
 					<Route path='/' element={<Home />} />
