@@ -1,5 +1,5 @@
 // component import
-import UserModel from "./userModel";
+import UserModel from "./userModel.js";
 
 // Named export
 export {
