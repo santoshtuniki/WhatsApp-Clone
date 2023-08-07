@@ -9,7 +9,7 @@ import Login from './pages/Login';
 
 function App() {
 	const { user } = useSelector((state) => state.user);
-	console.log('user: ', user);
+	// console.log('user: ', user);
 
 	return (
 		<div className='dark'>
