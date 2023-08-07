@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 // component imports
 import { signUpSchema } from '../../utils/validation';
@@ -19,6 +20,10 @@ function RegisterForm() {
 
 	// navigate
 	const navigate = useNavigate();
+
+	// picture
+	const [picture, setPicture] = useState();
+	const [readablePicture, setReadablePicture] = useState('');
 
 	// react-hook-form
 	const {
@@ -41,7 +46,7 @@ function RegisterForm() {
 	return (
 		<div className='p-10 w-full flex items-center justify-center overflow-hidden'>
 			{/* Container */}
-			<div className='max-w-md space-y-8 p-10 dark:bg-dark_bg_2 rounded-xl'>
+			<div className='w-full max-w-md space-y-8 p-10 dark:bg-dark_bg_2 rounded-xl'>
 				{/* Heading */}
 				<div className='text-center dark:text-dark_text_1'>
 					<h2 className='mt-6 text-3xl font-bold'>Welcome</h2>
@@ -66,7 +71,7 @@ function RegisterForm() {
 					<AuthInput
 						name='status'
 						type='text'
-						placeholder='Status'
+						placeholder='Status (Optional)'
 						register={register}
 						error={errors?.status?.message}
 					/>
@@ -77,6 +82,8 @@ function RegisterForm() {
 						register={register}
 						error={errors?.password?.message}
 					/>
+					{/* picture */}
+
 					{/* if we have an error */}
 					{
 						error ? (
