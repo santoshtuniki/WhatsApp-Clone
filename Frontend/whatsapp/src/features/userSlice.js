@@ -1,6 +1,8 @@
 // module imports
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
+// initial state
 const initialState = {
     status: '',
     error: '',
@@ -13,6 +15,18 @@ const initialState = {
         token: ''
     }
 }
+
+// env variables
+const AUTH_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
+
+export const registerUser = createAsyncThunk('auth/register', async (values, { rejectWithValue }) => {
+    try {
+        const { data } = axios.post(`${AUTH_ENDPOINT}/register`, { ...values });
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response.data.error.message);
+    }
+})
 
 const userSlice = createSlice({
     name: 'user',
@@ -30,6 +44,17 @@ const userSlice = createSlice({
                 token: ''
             }
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(registerUser.pending, (state) => {
+            state.status = 'loading'
+        })
+        builder.addCase(registerUser.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+        })
+        builder.addCase(registerUser.rejected, (state, action) => {
+            state.status = 'loading'
+        })
     }
 });
 

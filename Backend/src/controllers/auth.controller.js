@@ -31,14 +31,14 @@ export const register = async (req, res, next) => {
         // response
         res.json({
             message: 'register success...',
-            access_token,
             user: {
                 _id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
                 picture: newUser.picture,
                 status: newUser.status,
-                password: newUser.password
+                password: newUser.password,
+                access_token,
             }
         });
 
@@ -71,13 +71,13 @@ export const login = async (req, res, next) => {
         // response
         res.json({
             message: 'login success...',
-            access_token,
             user: {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 picture: user.picture,
                 status: user.status,
+                access_token,
             },
         });
 
@@ -121,13 +121,13 @@ export const refreshToken = async (req, res, next) => {
 
         // response
         res.json({
-            access_token,
             user: {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 picture: user.picture,
                 status: user.status,
+                access_token,
             },
         });
 
