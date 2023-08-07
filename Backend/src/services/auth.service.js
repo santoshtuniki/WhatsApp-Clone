@@ -58,6 +58,7 @@ export const createUser = async ({ name, email, picture, status, password }) => 
         password
     });
 
+    // return
     return user;
 
 }
@@ -76,6 +77,7 @@ export const signInUser = async ({ email, password }) => {
     // if password doesn't match
     if (!passwordMatches) throw createHttpError.NotFound('Invalid Credentials');
 
+    // return
     return user;
 
 }

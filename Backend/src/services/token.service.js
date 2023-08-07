@@ -1,8 +1,13 @@
 // module imports
-import { sign } from "../utils/token.util.js";
+import { sign, verify } from "../utils/token.util.js";
 
 // named exports
 export const generateToken = async (payload, expiresIn, secret) => {
-    let token = await sign(payload, expiresIn, secret);
+    const token = await sign(payload, expiresIn, secret);
     return token;
+}
+
+export const verifyToken = async (token, secret) => {
+    const check = await verify(token, secret);
+    return check;
 }

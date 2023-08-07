@@ -1,6 +1,8 @@
 // component imports
+import createHttpError from 'http-errors';
 import { createUser, signInUser } from '../services/auth.service.js';
-import { generateToken } from '../services/token.service.js';
+import { generateToken, verifyToken } from '../services/token.service.js';
+import { findUser } from '../services/user.service.js';
 
 // named exports
 export const register = async (req, res, next) => {
@@ -91,7 +93,7 @@ export const logout = async (req, res, next) => {
         res.json({
             message: 'logged out!'
         })
-        
+
     } catch (err) {
         next(err);
     }
@@ -99,6 +101,35 @@ export const logout = async (req, res, next) => {
 
 export const refreshToken = async (req, res, next) => {
     try {
+        // retrieve refresh_token
+        const refresh_token = req.cookies.refreshtoken;
+
+        // check if refreshtoken exists
+        if (!refresh_token) throw createHttpError.Unauthorized('Please login...');
+
+        // env variables
+        const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
+
+        // verify refreshtoken
+        const check = await verifyToken(refresh_token, REFRESH_TOKEN_SECRET);
+
+        // extract user details
+        const user = await findUser(check.userId);
+
+        // token generation
+        const access_token = await generateToken({ userId: user._id }, '1d', ACCESS_TOKEN_SECRET);
+
+        // response
+        res.json({
+            access_token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                picture: user.picture,
+                status: user.status,
+            },
+        });
 
     } catch (err) {
         next(err);
