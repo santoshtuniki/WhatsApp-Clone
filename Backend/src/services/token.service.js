@@ -1,8 +1,8 @@
 // module imports
-import { sign } from "../utils/token.util";
+import { sign } from "../utils/token.util.js";
 
 // named exports
 export const generateToken = async (payload, expiresIn, secret) => {
-    let token = await signgn(payload, expiresIn, secret);
+    let token = await sign(payload, expiresIn, secret);
     return token;
 }

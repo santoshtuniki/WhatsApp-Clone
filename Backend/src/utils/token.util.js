@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 
 // component imports
-import logger from '../configs/logger.config';
+import logger from '../configs/logger.config.js';
 
 // named exports
 export const sign = async (payload, expiresIn, secret) => {
