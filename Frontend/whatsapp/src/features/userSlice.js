@@ -21,7 +21,7 @@ const AUTH_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
 
 export const registerUser = createAsyncThunk('auth/register', async (values, { rejectWithValue }) => {
     try {
-        const { data } = axios.post(`${AUTH_ENDPOINT}/register`, { ...values });
+        const { data } = await axios.post(`${AUTH_ENDPOINT}/register`, { ...values });
         return data;
     } catch (err) {
         return rejectWithValue(err.response.data.error.message);
@@ -51,11 +51,16 @@ const userSlice = createSlice({
         })
         builder.addCase(registerUser.fulfilled, (state, action) => {
             state.status = 'succeeded'
+            state.user = action.payload.user
+            state.error = ''
         })
         builder.addCase(registerUser.rejected, (state, action) => {
-            state.status = 'loading'
+            state.status = 'failed'
+            state.user = ''
+            state.error = action.payload
+
         })
-    }
+    },
 });
 
 // Named export

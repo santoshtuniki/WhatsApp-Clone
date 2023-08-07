@@ -1,18 +1,26 @@
 // module imports
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // component imports
 import { signUpSchema } from '../../utils/validation';
 import AuthInput from './AuthInput';
+import { registerUser } from '../../features/userSlice';
 
 function RegisterForm() {
 
-	const { status } = useSelector((state) => state.user);
+	// Redux
+	const { status, error } = useSelector((state) => state.user);
 
+	const dispatch = useDispatch();
+
+	// navigate
+	const navigate = useNavigate();
+
+	// react-hook-form
 	const {
 		register,
 		handleSubmit,
@@ -22,7 +30,10 @@ function RegisterForm() {
 		resolver: yupResolver(signUpSchema),
 	});
 
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = async (data) => {
+		const res = await dispatch(registerUser({ ...data, picture: '' }));
+		if (res.payload.user) navigate('/');
+	};
 
 	// console.log('values; ', watch());	// watch input value by passing the name of it
 	// console.log('errors: ', errors);
@@ -66,6 +77,14 @@ function RegisterForm() {
 						register={register}
 						error={errors?.password?.message}
 					/>
+					{/* if we have an error */}
+					{
+						error ? (
+							<div>
+								<p className='text-red-400'>{error}</p>
+							</div>
+						) : null
+					}
 					{/* Submit Button */}
 					<button
 						type='submit'

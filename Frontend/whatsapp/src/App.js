@@ -8,8 +8,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 
 function App() {
-	const { user } = useSelector((state) => state.user);
-	// console.log('user: ', user);
+	const { user } = useSelector((state) => ({...state}));
+	console.log('user: ', user);
 
 	return (
 		<div className='dark'>
