@@ -4,6 +4,7 @@ import trimRequest from 'trim-request';
 
 // component imports
 import { login, logout, refreshToken, register } from '../controllers/auth.controller.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 // router
 const authRouter = express.Router();
@@ -19,6 +20,11 @@ authRouter.route('/logout').post(trimRequest.all, logout);
 
 // refreshToken route
 authRouter.route('/refreshtoken').post(trimRequest.all, refreshToken);
+
+// authMiddleware route
+authRouter.route('/testingAuthMiddleware').get(trimRequest.all, authMiddleware, (req, res) => {
+    res.json(req.user)
+});
 
 // Default export
 export default authRouter;
