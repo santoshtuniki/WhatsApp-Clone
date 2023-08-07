@@ -1,6 +1,7 @@
 // module imports
 import createHttpError from 'http-errors';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 // component imports
 import { UserModel } from '../models/index.js';
@@ -9,8 +10,7 @@ import { UserModel } from '../models/index.js';
 const { DEFAULT_PICTURE, DEFAULT_STATUS } = process.env;
 
 // named exports
-export const createUser = async (userData) => {
-    const { name, email, picture, status, password } = userData;
+export const createUser = async ({ name, email, picture, status, password }) => {
 
     // check if fields are empty
     if (!name || !email || !password) {
@@ -50,12 +50,32 @@ export const createUser = async (userData) => {
     // hash password -- to be done in the UserModel
 
     // add user to database
-    const user = await UserModel.create({
+    let user = await UserModel.create({
         name,
         email,
         picture: picture || DEFAULT_PICTURE,
         status: status || DEFAULT_STATUS,
         password
     });
+
     return user;
+
+}
+
+export const signInUser = async ({ email, password }) => {
+
+    // find user
+    const user = await UserModel.findOne({ email: email.toLowerCase() }).lean();
+
+    // check if user exists
+    if (!user) throw createHttpError.NotFound('Invalid Credentials');
+
+    // compare passwords
+    const passwordMatches = await bcrypt.compare(password, user.password);
+
+    // if password doesn't match
+    if (!passwordMatches) throw createHttpError.NotFound('Invalid Credentials');
+
+    return user;
+
 }
