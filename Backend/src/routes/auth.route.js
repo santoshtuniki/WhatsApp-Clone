@@ -18,7 +18,7 @@ authRouter.route('/login').post(trimRequest.all, login);
 authRouter.route('/logout').post(trimRequest.all, logout);
 
 // refreshToken route
-authRouter.route('/refreshToken').post(trimRequest.all, refreshToken);
+authRouter.route('/refreshtoken').post(trimRequest.all, refreshToken);
 
 // Default export
 export default authRouter;
