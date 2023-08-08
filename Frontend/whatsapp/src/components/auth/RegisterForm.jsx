@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { signUpSchema } from '../../utils/validation';
 import AuthInput from './AuthInput';
 import { registerUser } from '../../features/userSlice';
+import Picture from './Picture';
 
 function RegisterForm() {
 
@@ -44,7 +45,7 @@ function RegisterForm() {
 	// console.log('errors: ', errors);
 
 	return (
-		<div className='p-10 w-full flex items-center justify-center overflow-hidden'>
+		<div className='min-h-full w-full flex items-center justify-center overflow-hidden'>
 			{/* Container */}
 			<div className='w-full max-w-md space-y-8 p-10 dark:bg-dark_bg_2 rounded-xl'>
 				{/* Heading */}
@@ -71,7 +72,7 @@ function RegisterForm() {
 					<AuthInput
 						name='status'
 						type='text'
-						placeholder='Status (Optional)'
+						placeholder='Status ( Optional )'
 						register={register}
 						error={errors?.status?.message}
 					/>
@@ -83,7 +84,11 @@ function RegisterForm() {
 						error={errors?.password?.message}
 					/>
 					{/* picture */}
-
+					<Picture
+						readablePicture={readablePicture}
+						setReadablePicture={setReadablePicture}
+						setPicture={setPicture}
+					/>
 					{/* if we have an error */}
 					{
 						error ? (
@@ -95,7 +100,7 @@ function RegisterForm() {
 					{/* Submit Button */}
 					<button
 						type='submit'
-						className='w-full flex justify-center bg-green_1 text-gray-100 rounded-full tracking-wide py-2
+						className='w-full flex justify-center bg-green_1 text-gray-100 rounded-full tracking-wide py-3
 						font-semibold focus:outline-none hover:bg-green_2 shadow-lg cursor-pointer transition ease-in duration-300'
 					>
 						{status === 'loading' ? <PulseLoader color='#fff' size={16} /> : 'Sign up'}
