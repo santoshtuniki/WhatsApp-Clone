@@ -32,7 +32,6 @@ export const doesConversationExist = async (sender_id, receiver_id) => {
 }
 
 export const createConversation = async (data) => {
-
     // create conversation
     const newConversation = await ConversationModel.create(data);
 
@@ -46,7 +45,6 @@ export const createConversation = async (data) => {
 }
 
 export const populateConversation = async (id, fieldToPopulate, fieldToRemove) => {
-
     // populate conversation
     const populatedConversation = await ConversationModel.findOne({ _id: id })
         .populate(fieldToPopulate, fieldToRemove);
@@ -86,4 +84,10 @@ export const getUserConversations = async (user_id) => {
     // return
     return conversations;
 
+}
+
+export const updateLatestMessage = async (id, message) => {
+    const updatedConversation = await ConversationModel.findByIdAndUpdate(id, {
+        latestMessage: message
+    })
 }

@@ -8,6 +8,7 @@ import { findUser } from '../services/user.service.js';
 
 // named exports
 export const create_open_conversation = async (req, res, next) => {
+    
     try {
         const sender_id = req.user.userId;
         const { receiver_id } = req.body;
@@ -49,7 +50,6 @@ export const create_open_conversation = async (req, res, next) => {
 export const getConversations = async (req, res, next) => {
 
     try {
-
         const user_id = req.user.userId;
 
         const conversations = await getUserConversations(user_id);
