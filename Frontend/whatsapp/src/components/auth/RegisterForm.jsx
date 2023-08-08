@@ -9,8 +9,12 @@ import { useState } from 'react';
 // component imports
 import { signUpSchema } from '../../utils/validation';
 import AuthInput from './AuthInput';
-import { registerUser } from '../../features/userSlice';
+import { changeStatus, registerUser } from '../../features/userSlice';
 import Picture from './Picture';
+import axios from 'axios';
+
+const cloud_secret = process.env.REACT_APP_CLOUD_SECRET;
+const cloud_name = process.env.REACT_APP_CLOUD_NAME;
 
 function RegisterForm() {
 
@@ -36,9 +40,32 @@ function RegisterForm() {
 		resolver: yupResolver(signUpSchema),
 	});
 
+	const uploadImage = async () => {
+		const formData = new FormData();
+		formData.append('upload_preset', cloud_secret);
+		formData.append('file', picture);
+		// uploading
+		const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData);
+		console.log('data', data);
+		return data;
+	}
+
 	const onSubmit = async (data) => {
-		const res = await dispatch(registerUser({ ...data, picture: '' }));
-		if (res.payload.user) navigate('/');
+		let res;
+		dispatch(changeStatus('loading'));
+
+		if (picture) {
+			// upload to cloudinary, then register user
+			await uploadImage().then(async (result) => {
+				res = await dispatch(registerUser({ ...data, picture: result.secure_url }));
+			})
+		} else {
+			res = await dispatch(registerUser({ ...data, picture: '' }));
+		}
+
+		if (res?.payload?.user) {
+			navigate('/');
+		}
 	};
 
 	// console.log('values; ', watch());	// watch input value by passing the name of it

@@ -33,8 +33,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.status = '';
-            state.error = '';
+            state.status = ''
+            state.error = ''
             state.user = {
                 id: '',
                 name: '',
@@ -43,6 +43,9 @@ const userSlice = createSlice({
                 status: '',
                 token: ''
             }
+        },
+        changeStatus: (state, action) => {
+            state.status = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -64,7 +67,7 @@ const userSlice = createSlice({
 });
 
 // Named export
-export const { logout } = userSlice.actions;
+export const { logout, changeStatus } = userSlice.actions;
 
 // Default export
 export default userSlice.reducer;
