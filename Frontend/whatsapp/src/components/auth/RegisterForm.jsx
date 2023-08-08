@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
 
 // component imports
 import { signUpSchema } from '../../utils/validation';
 import AuthInput from './AuthInput';
 import { changeStatus, registerUser } from '../../features/userSlice';
 import Picture from './Picture';
-import axios from 'axios';
 
 const cloud_secret = process.env.REACT_APP_CLOUD_SECRET;
 const cloud_name = process.env.REACT_APP_CLOUD_NAME;
