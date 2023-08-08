@@ -1,5 +1,5 @@
 // module imports
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // component imports
@@ -8,16 +8,28 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 
 function App() {
-	const { user } = useSelector((state) => ({...state}));
-	console.log('user: ', user);
+	const { user } = useSelector((state) => state.user);
+	const token = user.access_token;
 
 	return (
 		<div className='dark'>
 			<Router>
 				<Routes>
-					<Route exact path='/' element={<Home />} />
-					<Route exact path='/register' element={<Register />} />
-					<Route exact path='/login' element={<Login />} />
+					<Route
+						exact
+						path='/'
+						element={token ? <Home /> : <Navigate to='/login' />}
+					/>
+					<Route
+						exact
+						path='/login'
+						element={!token ? <Login /> : <Navigate to='/' />}
+					/>
+					<Route
+						exact
+						path='/register'
+						element={!token ? <Register /> : <Navigate to='/' />}
+					/>
 				</Routes>
 			</Router>
 		</div>
