@@ -3,14 +3,16 @@ import express from 'express';
 
 // component imports
 import authRoutes from './auth.route.js';
-import conversationRouter from './conversation.route.js';
+import conversationRoutes from './conversation.route.js';
+import messageRoutes from './message.route.js';
 
 // router
 const router = express.Router();
 
 // use routes
 router.use('/auth', authRoutes);
-router.use('/conversation', conversationRouter);
+router.use('/conversation', conversationRoutes);
+router.use('/message', messageRoutes);
 
 // Default export
 export default router;
