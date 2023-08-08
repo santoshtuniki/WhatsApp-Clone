@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 
 // component imports
 import logger from '../configs/logger.config.js';
-import { doesConversationExist, createConversation, populateConversation } from '../services/conversation.service.js';
+import { doesConversationExist, createConversation, populateConversation, getUserConversations } from '../services/conversation.service.js';
 import { findUser } from '../services/user.service.js';
 
 // named exports
@@ -43,5 +43,21 @@ export const create_open_conversation = async (req, res, next) => {
 
     } catch (error) {
         next(error)
+    }
+}
+
+export const getConversations = async (req, res, next) => {
+
+    try {
+
+        const user_id = req.user.userId;
+
+        const conversations = await getUserConversations(user_id);
+
+        // response
+        res.status(200).json(conversations);
+
+    } catch (error) {
+
     }
 }
