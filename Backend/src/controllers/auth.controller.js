@@ -42,8 +42,8 @@ export const register = async (req, res, next) => {
             }
         });
 
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -81,8 +81,8 @@ export const login = async (req, res, next) => {
             },
         });
 
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -94,8 +94,8 @@ export const logout = async (req, res, next) => {
             message: 'logged out!'
         })
 
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -131,7 +131,7 @@ export const refreshToken = async (req, res, next) => {
             },
         });
 
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
 }
