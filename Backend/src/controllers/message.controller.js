@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 
 // component imports
 import logger from '../configs/logger.config.js';
-import { createMessage, populateMessage } from '../services/message.service.js';
+import { createMessage, populateMessage, getConversationMessages } from '../services/message.service.js';
 import { updateLatestMessage } from '../services/conversation.service.js';
 
 // named exports
@@ -43,7 +43,19 @@ export const sendMessage = async (req, res, next) => {
 export const getMessages = async (req, res, next) => {
 
     try {
+        // retrieve params
+        const { conversation_id } = req.params;
 
+        // check if conversation_id exists
+        if (!conversation_id) {
+            logger.error('Please add a conversation id in the params.');
+            res.sendStatus(400);
+        }
+
+        const messages = await getConversationMessages(conversation_id);
+
+        // response
+        res.json(messages);
 
     } catch (error) {
         next(error)

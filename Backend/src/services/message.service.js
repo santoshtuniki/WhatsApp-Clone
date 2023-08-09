@@ -44,3 +44,18 @@ export const populateMessage = async (id) => {
     return message;
 
 }
+
+export const getConversationMessages = async (conversation) => {
+    // find messages
+    const messages = await MessageModel.find({ conversation })
+        .populate('sender', 'name email picture status')
+        .populate('conversation');
+
+    // check message
+    if (!messages)
+        throw createHttpError.BadRequest('Oops... Something went wrong');
+
+    // return
+    return messages;
+
+}
