@@ -1,6 +1,7 @@
 // component imports
 import { SidebarHeader } from './header';
 import { Notifications } from './notifications';
+import { Search } from './search';
 
 function Sidebar() {
     return (
@@ -9,6 +10,8 @@ function Sidebar() {
             <SidebarHeader />
             {/* Notifications */}
             <Notifications />
+            {/* Search */}
+            <Search />
         </div>
     )
 }
