@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
-        default: 'https://i.ibb.co/ZH0Br80/default-Person.jpg',
+        default: 'https://res.cloudinary.com/dnjnoplb1/image/upload/v1691588936/Santosh%40onPassive/mwmwwg43pqgjdh2kny0f.jpg',
     },
     status: {
         type: String,

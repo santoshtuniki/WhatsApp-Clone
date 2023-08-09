@@ -9,7 +9,8 @@ import Login from './pages/Login';
 
 function App() {
 	const { user } = useSelector((state) => state.user);
-	const token = user.access_token;
+	// const token = user.access_token;
+	const token = true;
 
 	return (
 		<div className='dark'>
