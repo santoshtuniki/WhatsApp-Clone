@@ -41,7 +41,7 @@
 	}
 
 	.input {
-		@apply w-full p-1.5 rounded-lg flex-1 outline-none;
+		@apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
 	}
 
 	.convos {
