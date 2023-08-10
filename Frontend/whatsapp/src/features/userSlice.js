@@ -19,6 +19,7 @@ const initialState = {
 // env variables
 const AUTH_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
 
+// functions
 export const registerUser = createAsyncThunk('auth/register', async (values, { rejectWithValue }) => {
     try {
         const { data } = await axios.post(`${AUTH_ENDPOINT}/register`, { ...values });
@@ -37,6 +38,7 @@ export const loginUser = createAsyncThunk('auth/login', async (values, { rejectW
     }
 })
 
+// userSlice
 const userSlice = createSlice({
     name: 'user',
     initialState,

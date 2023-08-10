@@ -8,7 +8,7 @@ import { findUser } from '../services/user.service.js';
 
 // named exports
 export const create_open_conversation = async (req, res, next) => {
-    
+
     try {
         const sender_id = req.user.userId;
         const { receiver_id } = req.body;
@@ -30,6 +30,7 @@ export const create_open_conversation = async (req, res, next) => {
 
             const conversationData = {
                 name: receiver_user.name,
+                picture: receiver_user.picture,
                 isGroup: false,
                 users: [sender_id, receiver_id],
             };

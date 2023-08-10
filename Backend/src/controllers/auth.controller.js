@@ -38,7 +38,7 @@ export const register = async (req, res, next) => {
                 picture: newUser.picture,
                 status: newUser.status,
                 password: newUser.password,
-                access_token,
+                token: access_token,
             }
         });
 
@@ -77,7 +77,7 @@ export const login = async (req, res, next) => {
                 email: user.email,
                 picture: user.picture,
                 status: user.status,
-                access_token,
+                token: access_token,
             },
         });
 
@@ -127,7 +127,7 @@ export const refreshToken = async (req, res, next) => {
                 email: user.email,
                 picture: user.picture,
                 status: user.status,
-                access_token,
+                token: access_token,
             },
         });
 
