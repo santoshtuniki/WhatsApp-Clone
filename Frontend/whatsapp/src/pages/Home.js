@@ -14,7 +14,7 @@ function Home() {
 
     // componentDidMount
     useEffect(() => {
-        if (user?.token) {
+        if (user) {
             dispatch(getConversations(user.token));
         }
 

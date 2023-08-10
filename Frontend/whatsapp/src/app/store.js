@@ -19,7 +19,7 @@ const saveUserOnlyFilter = createFilter('user', ['user']);
 
 // persist config
 const persistConfig = {
-    key: 'user',
+    key: 'user',    // A unique key for the persisted 'user' state
     storage,
     whitelist: ['user'],    // key in rootReducer when using combineReducers
     transforms: [saveUserOnlyFilter]
