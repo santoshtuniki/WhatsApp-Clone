@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { SidebarHeader } from './header';
 import { Notifications } from './notifications';
 import { Search } from './search';
+import { Conversations } from './conversations';
 
 function Sidebar() {
     const [searchResults, setSearchResults] = useState([]);
@@ -17,6 +18,8 @@ function Sidebar() {
             <Notifications />
             {/* Search */}
             <Search searchLength={searchResults.length} />
+            {/* Conversations */}
+            <Conversations />
         </div>
     )
 }
