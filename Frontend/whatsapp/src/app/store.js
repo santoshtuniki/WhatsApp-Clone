@@ -5,11 +5,13 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 // component imports
-import userReducer from "../features/userSlice";
+import userReducer from '../features/userSlice';
+import chatReducer from '../features/chatSlice';
 
 // combine reducer
 const rootReducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+    chat: chatReducer,
 });
 
 // saveUserOnlyFilter

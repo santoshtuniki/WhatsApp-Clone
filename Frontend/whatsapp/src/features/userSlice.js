@@ -13,7 +13,7 @@ const initialState = {
         picture: '',
         status: '',
         token: ''
-    }
+    },
 }
 
 // env variables
