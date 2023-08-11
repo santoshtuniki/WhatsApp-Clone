@@ -16,3 +16,15 @@ export const findUser = async (userId) => {
     // return
     return user;
 }
+
+export const searchUsers = async (search) => {
+    const users = await UserModel.find({
+        $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } },
+        ],
+    });
+
+    // return
+    return users;
+}
