@@ -1,14 +1,24 @@
 // module imports
 import { useState } from 'react';
+import axios from 'axios';
 
 // component imports
 import { FilterIcon, ReturnIcon, SearchIcon } from '../../../svg';
 
+// env variable
+const { REACT_APP_API_ENDPOINT } = process.env;
+
 function Search({ searchLength }) {
     const [show, setShow] = useState(false);
 
-    const handleSearch = (e) => {
-
+    const handleSearch = async (e) => {
+        if (e.target.value && e.key === 'Enter') {
+            try {
+                const { data } = await axios.get(`${REACT_APP_API_ENDPOINT}/user`);
+            } catch (error) {
+                console.log(error.response.data.error.message);
+            }
+        }
     }
 
     return (
