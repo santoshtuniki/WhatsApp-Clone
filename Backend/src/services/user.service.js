@@ -17,12 +17,14 @@ export const findUser = async (userId) => {
     return user;
 }
 
-export const searchUsers = async (search) => {
+export const searchUsers = async (search, userId) => {
     const users = await UserModel.find({
         $or: [
             { name: { $regex: search, $options: 'i' } },
             { email: { $regex: search, $options: 'i' } },
         ],
+    }).find({
+        _id: { $ne: userId }
     });
 
     // return

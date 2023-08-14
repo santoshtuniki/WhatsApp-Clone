@@ -4,7 +4,7 @@ import { useState } from 'react';
 // component imports
 import { SidebarHeader } from './header';
 import { Notifications } from './notifications';
-import { Search } from './search';
+import { Search, SearchResults } from './search';
 import { Conversations } from './conversations';
 
 function Sidebar() {
@@ -19,8 +19,13 @@ function Sidebar() {
             <Notifications />
             {/* Search */}
             <Search searchLength={searchResults.length} setSearchResults={setSearchResults} />
-            {/* Conversations */}
-            <Conversations />
+            {
+                searchResults.length > 0 ? (
+                    <SearchResults searchResults={searchResults}/>
+                ) : (
+                    < Conversations />
+                )
+            }
         </div>
     )
 }

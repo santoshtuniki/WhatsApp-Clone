@@ -17,7 +17,7 @@ export const searchUsers = async (req, res, next) => {
         }
 
         // Find user(s)
-        const users = await searchUsersService(search);
+        const users = await searchUsersService(search, req.user.userId);
 
         // response
         res.status(200).json(users);

@@ -1,7 +1,9 @@
 // component imports
-import SidebarHeader from "./SidebarHeader";
+import SidebarHeader from './SidebarHeader';
+import Menu from './Menu';
 
 // named exports
 export {
-    SidebarHeader
+    SidebarHeader,
+    Menu
 };
