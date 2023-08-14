@@ -1,6 +1,7 @@
 // module imports
 import { useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 // component imports
 import { FilterIcon, ReturnIcon, SearchIcon } from '../../../svg';
@@ -8,16 +9,27 @@ import { FilterIcon, ReturnIcon, SearchIcon } from '../../../svg';
 // env variable
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-function Search({ searchLength }) {
+function Search({ searchLength, setSearchResults }) {
     const [show, setShow] = useState(false);
+
+    // token
+    const { user } = useSelector((state) => state.user);
+    const { token } = user;
 
     const handleSearch = async (e) => {
         if (e.target.value && e.key === 'Enter') {
             try {
-                const { data } = await axios.get(`${REACT_APP_API_ENDPOINT}/user`);
+                const { data } = await axios.get(`${REACT_APP_API_ENDPOINT}/user?search=${e.target.value}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setSearchResults(data);
             } catch (error) {
                 console.log(error.response.data.error.message);
             }
+        } else {
+            setSearchResults([]);
         }
     }
 
