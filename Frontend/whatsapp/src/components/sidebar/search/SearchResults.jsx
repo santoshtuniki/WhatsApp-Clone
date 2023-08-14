@@ -1,5 +1,5 @@
 // component imports
-import { Contact } from './index.js';
+import { Contact } from './index';
 
 function SearchResults({ searchResults }) {
     return (

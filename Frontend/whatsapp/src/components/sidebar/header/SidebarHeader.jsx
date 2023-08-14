@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // component imports
 import { ChatIcon, CommunityIcon, DotsIcon, StoryIcon } from '../../../svg';
-import { Menu } from './index.js';
+import { Menu } from './index';
 
 function SidebarHeader() {
 
