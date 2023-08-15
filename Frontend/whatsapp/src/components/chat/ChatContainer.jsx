@@ -1,13 +1,22 @@
+// module imports
+import { useSelector } from 'react-redux';
+
 // component imports
-import { ChatHeader } from './index';
+import { ChatHeader, ChatMessages } from './index';
 
 function ChatContainer() {
+    // Redux
+    const { activeConversation } = useSelector((state) => state.chat);
+    const { name, picture } = activeConversation;
+    
     return (
         <div className='relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden'>
             {/* Container */}
             <div>
-                {/* Chat Header */}
+                {/* Chat header */}
                 <ChatHeader />
+                {/* Chat messages */}
+                <ChatMessages />
             </div>
         </div>
     )
