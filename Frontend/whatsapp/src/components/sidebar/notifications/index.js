@@ -1,5 +1,5 @@
 // component imports
-import Notifications from "./Notifications";
+import Notifications from './Notifications';
 
 // named exports
 export {

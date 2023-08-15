@@ -1,5 +1,5 @@
 // module importsu
-import createHttpError from "http-errors";
+import createHttpError from 'http-errors';
 
 // component imports
 import { searchUsers as searchUsersService } from '../services/user.service.js';

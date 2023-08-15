@@ -1,5 +1,5 @@
 // component imports
-import { Logo } from "../../../svg";
+import { Logo } from '../../../svg';
 
 function WhatsappHome() {
     return (
@@ -10,11 +10,11 @@ function WhatsappHome() {
                     <Logo />
                 </span>
                 {/* Infos */}
-                <div className="mt-1 text-center space-y-[12px]">
-                    <h1 className="text-[32px] dark:text-dark_text_4 font-extralight">
+                <div className='mt-1 text-center space-y-[12px]'>
+                    <h1 className='text-[32px] dark:text-dark_text_4 font-extralight'>
                         Whatsapp Web
                     </h1>
-                    <p className="text-sm dark:text-dark_text_3">
+                    <p className='text-sm dark:text-dark_text_3'>
                         Send and receive messages without keeping your phone online
                         <br />
                         Use Whatsapp on up to 4 linked devices and 1 phone at the same time

@@ -1,5 +1,5 @@
 // module imports
-import createHttpError from "http-errors";
+import createHttpError from 'http-errors';
 import jwt from 'jsonwebtoken';
 
 // component imports

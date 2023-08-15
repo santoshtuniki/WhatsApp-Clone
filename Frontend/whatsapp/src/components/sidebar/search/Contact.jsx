@@ -1,8 +1,8 @@
 // module imports
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 // component imports
-import { open_create_conversation } from "../../../features/chatSlice";
+import { open_create_conversation } from '../../../features/chatSlice';
 
 function Contact({ contact }) {
     // Redux

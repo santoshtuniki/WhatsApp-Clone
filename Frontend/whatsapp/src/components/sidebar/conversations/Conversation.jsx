@@ -1,10 +1,11 @@
 // module imports
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 // component imports
-import dateHandler from "../../../utils/date";
-import getConversationId from "../../../utils/chat";
-import { open_create_conversation } from "../../../features/chatSlice";
+import dateHandler from '../../../utils/date';
+import getConversationId from '../../../utils/chat';
+import capitalize from '../../../utils/string';
+import { open_create_conversation } from '../../../features/chatSlice';
 
 function Conversation({ convo }) {
     // Redux
@@ -43,7 +44,7 @@ function Conversation({ convo }) {
                     <div className='w-full flex flex-col'>
                         {/* Conversation name */}
                         <h1 className='font-bold flex items-center gap-x-2'>
-                            {convo.name}
+                            {capitalize(convo.name)}
                         </h1>
                         {/* Conversation message */}
                         <div>
@@ -66,13 +67,13 @@ function Conversation({ convo }) {
                     <span className='dark:text-dark_text_2'>
                         {
                             convo.latestMessage?.createdAt ?
-                                dateHandler(convo.latestMessage?.createdAt) : ""
+                                dateHandler(convo.latestMessage?.createdAt) : ''
                         }
                     </span>
                 </div>
             </div>
             {/* Border */}
-            <div className="ml-16 border-b dark:border-b-dark_border_1"></div>
+            <div className='ml-16 border-b dark:border-b-dark_border_1'></div>
         </li>
     )
 }

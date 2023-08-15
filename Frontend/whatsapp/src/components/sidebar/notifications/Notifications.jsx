@@ -3,15 +3,15 @@ import { ArrowIcon, CloseIcon, NotificationIcon } from '../../../svg';
 
 function Notifications() {
     return (
-        <div className="h-[90px] dark:bg-dark_bg_3 flex items-center p-[13px]">
+        <div className='h-[90px] dark:bg-dark_bg_3 flex items-center p-[13px]'>
             {/*container*/}
-            <div className="w-full flex items-center justify-between">
+            <div className='w-full flex items-center justify-between'>
                 {/* Left */}
-                <div className="flex items-center gap-x-4">
-                    <div className="cursor-pointer">
+                <div className='flex items-center gap-x-4'>
+                    <div className='cursor-pointer'>
                         <NotificationIcon className='dark:fill-blue_1' />
                     </div>
-                    <div className="flex flex-col">
+                    <div className='flex flex-col'>
                         <span className='textPrimary'>
                             Get notified of new messages
                         </span>

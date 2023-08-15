@@ -1,6 +1,6 @@
 // component import
-import UserModel from "./userModel.js";
-import ConversationModel from "./conversationModel.js";
+import UserModel from './userModel.js';
+import ConversationModel from './conversationModel.js';
 import MessageModel from './messageModel.js';
 
 // Named export
