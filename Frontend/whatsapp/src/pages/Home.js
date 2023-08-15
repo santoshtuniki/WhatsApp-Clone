@@ -11,6 +11,7 @@ function Home() {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { activeConversation } = useSelector((state) => state.chat);
+    console.log(activeConversation)
 
     const dispatch = useDispatch();
 

@@ -1,10 +1,32 @@
+// module imports
+import { useSelector, useDispatch } from "react-redux";
+
 // component imports
-import moment from "moment";
 import dateHandler from "../../../utils/date";
+import getConversationId from "../../../utils/chat";
+import { open_create_conversation } from "../../../features/chatSlice";
 
 function Conversation({ convo }) {
+    // Redux
+    const { user } = useSelector((state) => state.user);
+    const { token } = user;
+
+    const dispatch = useDispatch();
+
+    const values = {
+        token,
+        receiver_id: getConversationId(user, convo.users),
+    }
+
+    const openConversation = () => {
+        dispatch(open_create_conversation(values))
+    }
+
     return (
-        <li className='list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]'>
+        <li
+            onClick={() => openConversation()}
+            className='list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]'
+        >
             {/* Container */}
             <div className='relative w-full flex items-center justify-between py-[10px]'>
                 {/* Left */}
@@ -27,7 +49,13 @@ function Conversation({ convo }) {
                         <div>
                             <div className='flex items-center gap-x-1 dark:text-dark_text_2'>
                                 <div className='flex-1 items-center gap-x-1 dark:text-dark_text_2'>
-                                    <p>{convo.latestMessage?.message}</p>
+                                    <p>
+                                        {
+                                            convo.latestMessage?.message.length > 25 ?
+                                                `${convo.latestMessage?.message.substring(0, 25)}...` :
+                                                convo.latestMessage?.message
+                                        }
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +64,10 @@ function Conversation({ convo }) {
                 {/* Right */}
                 <div className='flex flex-col gap-y-4 items-end text-xs'>
                     <span className='dark:text-dark_text_2'>
-                        {dateHandler(convo.latestMessage.createdAt)}
+                        {
+                            convo.latestMessage?.createdAt ?
+                                dateHandler(convo.latestMessage?.createdAt) : ""
+                        }
                     </span>
                 </div>
             </div>
