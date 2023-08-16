@@ -8,11 +8,16 @@ const initialState = {
     error: '',
     conversations: [],
     activeConversation: {},
+    messages: [],
     notifications: [],
 }
 
 // env variables
-const CONVERSATION_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/conversation`;
+const { REACT_APP_API_ENDPOINT } = process.env;
+
+// endPoints
+const CONVERSATION_ENDPOINT = `${REACT_APP_API_ENDPOINT}/conversation`;
+const MESSAGE_ENDPOINT = `${REACT_APP_API_ENDPOINT}/message`;
 
 // functions
 export const getConversations = createAsyncThunk('conversation/all', async (token, { rejectWithValue }) => {
@@ -32,6 +37,20 @@ export const open_create_conversation = createAsyncThunk('conversation/open_crea
     const { token, receiver_id } = values;
     try {
         const { data } = await axios.post(CONVERSATION_ENDPOINT, { receiver_id }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response.data.error.message);
+    }
+})
+
+export const getConversationMessages = createAsyncThunk('conversation/messages', async (values, { rejectWithValue }) => {
+    const { token, conversation_id } = values;
+    try {
+        const { data } = await axios.get(`${MESSAGE_ENDPOINT}/${conversation_id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -73,6 +92,18 @@ const chatSlice = createSlice({
             state.error = ''
         })
         builder.addCase(open_create_conversation.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.payload
+        })
+        builder.addCase(getConversationMessages.pending, (state) => {
+            state.status = 'loading'
+        })
+        builder.addCase(getConversationMessages.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.messages = action.payload
+            state.error = ''
+        })
+        builder.addCase(getConversationMessages.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.payload
         })

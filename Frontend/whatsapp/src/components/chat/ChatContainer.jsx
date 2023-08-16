@@ -1,14 +1,31 @@
 // module imports
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // component imports
 import { ChatHeader, ChatMessages } from './index';
+import { useEffect } from 'react';
+import { getConversationMessages } from '../../features/chatSlice';
 
 function ChatContainer() {
     // Redux
-    const { activeConversation } = useSelector((state) => state.chat);
-    const { name, picture } = activeConversation;
-    
+    const { user } = useSelector((state) => state.user);
+    const { token } = user;
+    const { activeConversation, messages } = useSelector((state) => state.chat);
+
+    const dispatch = useDispatch();
+
+    const values = {
+        token,
+        conversation_id: activeConversation?._id
+    }
+
+    // componentDidUpdate
+    useEffect(() => {
+        if (activeConversation?._id) {
+            dispatch(getConversationMessages(values))
+        }
+    }, [activeConversation]);
+
     return (
         <div className='relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden'>
             {/* Container */}
