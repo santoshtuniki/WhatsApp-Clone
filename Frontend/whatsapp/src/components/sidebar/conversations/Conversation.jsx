@@ -12,6 +12,8 @@ function Conversation({ convo }) {
     const { user } = useSelector((state) => state.user);
     const { token } = user;
 
+    const { activeConversation } = useSelector((state) => state.chat);
+
     const dispatch = useDispatch();
 
     const values = {
@@ -26,7 +28,14 @@ function Conversation({ convo }) {
     return (
         <li
             onClick={() => openConversation()}
-            className='list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]'
+            className={
+                `list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${
+                    convo._id !== activeConversation._id ? 'dark:bg-dark_bg_2' : ''
+                }
+                 cursor-pointer dark:text-dark_text_1 px-[10px] ${
+                    convo._id === activeConversation._id ? 'dark:bg-dark_hover_1' : ''
+                }`
+            }
         >
             {/* Container */}
             <div className='relative w-full flex items-center justify-between py-[10px]'>
