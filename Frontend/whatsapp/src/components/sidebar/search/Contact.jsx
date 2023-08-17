@@ -19,6 +19,7 @@ function Contact({ contact }) {
     const openConversation = () => {
         dispatch(open_create_conversation(values))
     }
+    
     return (
         <li
             onClick={() => openConversation()}

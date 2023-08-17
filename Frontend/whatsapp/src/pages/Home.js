@@ -34,7 +34,7 @@ function Home() {
                 {/* Sidebar */}
                 <Sidebar />
                 {
-                    activeConversation._id ? <ChatContainer /> : <WhatsappHome />
+                    activeConversation?._id ? <ChatContainer /> : <WhatsappHome />
                 }
             </div>
         </div>

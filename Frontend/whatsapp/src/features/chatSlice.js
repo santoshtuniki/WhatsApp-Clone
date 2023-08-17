@@ -61,6 +61,27 @@ export const getConversationMessages = createAsyncThunk('conversation/messages',
     }
 })
 
+export const sendMessage = createAsyncThunk('message/send', async (values, { rejectWithValue }) => {
+    const { token, message, conversation_id, files } = values;
+    try {
+        const { data } = await axios.post(
+            MESSAGE_ENDPOINT,
+            {
+                message,
+                conversation_id,
+                files
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response.data.error.message);
+    }
+})
+
 // chatSlice
 const chatSlice = createSlice({
     name: 'chat',
@@ -71,6 +92,7 @@ const chatSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        // getConversations
         builder.addCase(getConversations.pending, (state) => {
             state.status = 'loading'
         })
@@ -83,6 +105,7 @@ const chatSlice = createSlice({
             state.status = 'failed'
             state.error = action.payload
         })
+        // open_create_conversation
         builder.addCase(open_create_conversation.pending, (state) => {
             state.status = 'loading'
         })
@@ -95,6 +118,7 @@ const chatSlice = createSlice({
             state.status = 'failed'
             state.error = action.payload
         })
+        // getConversationMessages
         builder.addCase(getConversationMessages.pending, (state) => {
             state.status = 'loading'
         })
@@ -104,6 +128,19 @@ const chatSlice = createSlice({
             state.error = ''
         })
         builder.addCase(getConversationMessages.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.payload
+        })
+        // sendMessage
+        builder.addCase(sendMessage.pending, (state) => {
+            state.status = 'loading'
+        })
+        builder.addCase(sendMessage.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.messages = [...state.messages, action.payload]
+            state.error = ''
+        })
+        builder.addCase(sendMessage.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.payload
         })

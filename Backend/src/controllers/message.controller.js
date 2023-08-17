@@ -12,10 +12,10 @@ export const sendMessage = async (req, res, next) => {
     try {
         const user_id = req.user.userId;
 
-        const { message, conversation, files } = req.body;
+        const { message, conversation_id, files } = req.body;
 
         // check message and conversation
-        if (!conversation || (!message && !files)) {
+        if (!conversation_id || (!message && !files)) {
             logger.error('Please provide a conversation id and a message body.');
             res.sendStatus(400);
         }
@@ -23,7 +23,7 @@ export const sendMessage = async (req, res, next) => {
         const messageData = {
             sender: user_id,
             message,
-            conversation,
+            conversation: conversation_id,
             files: files || [],
         }
 
@@ -31,7 +31,7 @@ export const sendMessage = async (req, res, next) => {
 
         const populatedMessage = await populateMessage(newMessage._id);
 
-        await updateLatestMessage(conversation, newMessage);
+        await updateLatestMessage(conversation_id, newMessage);
 
         res.json(populatedMessage);
 
