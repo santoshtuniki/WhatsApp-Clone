@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 // component imports
 import { Sidebar } from '../components/sidebar';
-import { ChatContainer, WhatsappHome } from '../components/chat';
+import { ChatContainer } from '../components/chat';
+import { WhatsappHome } from '../components/chat/welcome';
 import { getConversations } from '../features/chatSlice';
 
 function Home() {

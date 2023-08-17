@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux';
 
 // component imports
-import { Message } from '../index';
+import { Message } from './index';
 
 function ChatMessages() {
     // Redux
