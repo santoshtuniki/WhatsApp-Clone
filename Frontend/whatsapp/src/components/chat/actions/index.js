@@ -1,13 +1,13 @@
 // component imports
 import ChatActions from './ChatActions';
-import EmojiPicker from './EmojiPicker';
+import EmojiPickerApp from './EmojiPicker';
 import Attachments from './Attachments';
 import Input from './Input';
 
 // named exports
 export {
     ChatActions,
-    EmojiPicker,
+    EmojiPickerApp,
     Attachments,
     Input
 }

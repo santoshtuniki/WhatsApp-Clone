@@ -1,16 +1,17 @@
 // module imports
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 
 // component imports
-import { EmojiPicker, Attachments, Input } from './index';
+import { EmojiPickerApp, Attachments, Input } from './index';
 import { SendIcon } from '../../../svg';
 import { sendMessage } from '../../../features/chatSlice';
 
 function ChatActions() {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(true);
+    const textRef = useRef();
 
     // Redux
     const { user } = useSelector((state) => state.user);
@@ -30,7 +31,6 @@ function ChatActions() {
     const sendMessageHandler = async (e) => {
         e.preventDefault();
         await dispatch(sendMessage(values));
-
         setMessage('');
     }
 
@@ -43,11 +43,19 @@ function ChatActions() {
             <div className='w-full flex items-center gap-x-2'>
                 {/*Emojis and attachpments*/}
                 <ul className='flex gap-x-2'>
-                    <EmojiPicker />
+                    <EmojiPickerApp
+                        textRef={textRef}
+                        message={message}
+                        setMessage={setMessage}
+                    />
                     <Attachments />
                 </ul>
                 {/*Input*/}
-                <Input message={message} setMessage={setMessage} />
+                <Input
+                    message={message}
+                    setMessage={setMessage}
+                    textRef={textRef}
+                />
                 {/*Send button*/}
                 <button type='submit' className='btn'>
                     {

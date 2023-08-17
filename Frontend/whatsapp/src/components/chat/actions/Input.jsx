@@ -1,9 +1,10 @@
 // component imports
 
-function Input({ message, setMessage }) {
+function Input({ message, setMessage, textRef }) {
     const inputHandler = (e) => {
         setMessage(e.target.value)
     }
+    
     return (
         <div className='w-full'>
             <input
@@ -12,6 +13,7 @@ function Input({ message, setMessage }) {
                 placeholder='Type a message'
                 value={message}
                 onChange={inputHandler}
+                ref={textRef}
             />
         </div>
     )
