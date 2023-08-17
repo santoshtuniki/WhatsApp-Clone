@@ -137,8 +137,17 @@ const chatSlice = createSlice({
         })
         builder.addCase(sendMessage.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            state.messages = [...state.messages, action.payload]
             state.error = ''
+            state.messages = [...state.messages, action.payload]
+
+            const conversation = {
+                ...action.payload.conversation,
+                latestMessage: action.payload
+            }
+            const newConversations = [...state.conversations].filter((convo) => convo._id !== conversation._id);
+            newConversations.unshift(conversation);
+
+            state.conversations = newConversations;
         })
         builder.addCase(sendMessage.rejected, (state, action) => {
             state.status = 'failed'

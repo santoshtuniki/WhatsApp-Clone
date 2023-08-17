@@ -1,7 +1,7 @@
 // component imports
 import { Contact } from './index';
 
-function SearchResults({ searchResults }) {
+function SearchResults({ searchResults, setSearchResults }) {
     return (
         <div className='w-full convos scrollbar'>
             <div>
@@ -13,9 +13,13 @@ function SearchResults({ searchResults }) {
                 {/* Results */}
                 <ul>
                     {
-                        searchResults?.length > 0 && searchResults.map((user) => {
-                            return <Contact contact={user} key={user._id} />
-                        })
+                        searchResults?.length > 0 && searchResults.map((user) => (
+                            <Contact
+                                contact={user}
+                                key={user._id}
+                                setSearchResults={setSearchResults}
+                            />
+                        ))
                     }
                 </ul>
             </div>

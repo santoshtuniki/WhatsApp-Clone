@@ -30,7 +30,7 @@ function LoginForm() {
 	});
 
 	const onSubmit = async (data) => {
-		dispatch(changeStatus('loading'));
+		await dispatch(changeStatus('loading'));
 
 		let res = await dispatch(loginUser(data));
 		if (res?.payload?.user) {

@@ -19,8 +19,8 @@ function Conversation({ convo }) {
         receiver_id: getConversationId(user, convo.users),
     }
 
-    const openConversation = () => {
-        dispatch(open_create_conversation(values))
+    const openConversation = async () => {
+        await dispatch(open_create_conversation(values))
     }
 
     return (

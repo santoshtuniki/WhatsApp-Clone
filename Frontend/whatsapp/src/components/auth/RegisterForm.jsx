@@ -51,7 +51,7 @@ function RegisterForm() {
 
 	const onSubmit = async (data) => {
 		let res;
-		dispatch(changeStatus('loading'));
+		await dispatch(changeStatus('loading'));
 
 		if (picture) {
 			// upload to cloudinary, then register user
