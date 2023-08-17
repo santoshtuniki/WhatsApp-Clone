@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 
 // component imports
-import { EmojiPickerApp, Attachments, Input } from './index';
+import { EmojiPickerApp, Input } from './index';
+import { Attachments } from './attachments';
 import { SendIcon } from '../../../svg';
 import { sendMessage } from '../../../features/chatSlice';
 
 function ChatActions() {
     const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [showPicker, setShowPicker] = useState(false);
+    const [showAttachments, setShowAttachments] = useState(false);
     const textRef = useRef();
 
     // Redux
@@ -30,8 +33,10 @@ function ChatActions() {
 
     const sendMessageHandler = async (e) => {
         e.preventDefault();
+        setLoading(true);
         await dispatch(sendMessage(values));
         setMessage('');
+        setLoading(false);
     }
 
     return (
@@ -47,8 +52,15 @@ function ChatActions() {
                         textRef={textRef}
                         message={message}
                         setMessage={setMessage}
+                        showPicker={showPicker}
+                        setShowPicker={setShowPicker}
+                        setShowAttachments={setShowAttachments}
                     />
-                    <Attachments />
+                    <Attachments
+                        showAttachments={showAttachments}
+                        setShowAttachments={setShowAttachments}
+                        setShowPicker={setShowPicker}
+                    />
                 </ul>
                 {/*Input*/}
                 <Input

@@ -1,5 +1,6 @@
 // module imports
 import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 // component imports
 import { Message } from './index';
@@ -8,6 +9,16 @@ function ChatMessages() {
     // Redux
     const { messages } = useSelector((state) => state.chat);
     const { user } = useSelector((state) => state.user);
+    const endRef = useRef();
+
+    // componentDidUpdate
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages])
+
+    const scrollToBottom = () => {
+        endRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
 
     return (
         <div
@@ -19,9 +30,14 @@ function ChatMessages() {
                 {/*Messages*/}
                 {
                     messages && messages.map((message) => (
-                        <Message message={message} key={message._id} me={user._id} />
+                        <Message
+                            message={message}
+                            key={message._id}
+                            me={user._id}
+                        />
                     ))
                 }
+                <div className='mt-2' ref={endRef}></div>
             </div>
         </div>
     )

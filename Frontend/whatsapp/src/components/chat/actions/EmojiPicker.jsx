@@ -1,12 +1,11 @@
 // module imports
 import EmojiPicker from 'emoji-picker-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // component imports
 import { EmojiIcon, CloseIcon } from '../../../svg';
 
-function EmojiPickerApp({ textRef, message, setMessage }) {
-    const [showPicker, setShowPicker] = useState(false);
+function EmojiPickerApp({ textRef, message, setMessage, showPicker, setShowPicker, setShowAttachments }) {
     const [cursorPosition, setCursorPosition] = useState();
 
     // componentDidUpdate
@@ -29,7 +28,14 @@ function EmojiPickerApp({ textRef, message, setMessage }) {
 
     return (
         <li className='w-full'>
-            <button className='btn' type='button' onClick={() => setShowPicker((prev) => !prev)}>
+            <button
+                type='button'
+                className='btn'
+                onClick={() => {
+                    setShowAttachments(false);
+                    setShowPicker((prev) => !prev);
+                }}
+            >
                 {
                     showPicker ? (
                         <CloseIcon className="dark:fill-dark_svg_1" />
