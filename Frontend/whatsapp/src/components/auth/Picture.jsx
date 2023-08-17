@@ -52,7 +52,7 @@ function Picture({ readablePicture, setReadablePicture, setPicture }) {
                     <div>
                         <img
                             src={readablePicture}
-                            alt='picture'
+                            alt='DP'
                             className='w-20 h-20 object-cover rounded-full'
                         />
                         {/* Change Pic */}

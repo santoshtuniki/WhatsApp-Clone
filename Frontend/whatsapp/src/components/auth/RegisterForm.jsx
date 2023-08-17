@@ -34,7 +34,6 @@ function RegisterForm() {
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(signUpSchema),
@@ -67,9 +66,6 @@ function RegisterForm() {
 			navigate('/');
 		}
 	};
-
-	// console.log('values; ', watch());	// watch input value by passing the name of it
-	// console.log('errors: ', errors);
 
 	return (
 		<div className='min-h-full w-full flex items-center justify-center overflow-hidden'>

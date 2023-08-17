@@ -1,16 +1,16 @@
 // module imports
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // component imports
 import { ChatHeader, ChatMessages } from './index';
-import { useEffect } from 'react';
 import { getConversationMessages } from '../../features/chatSlice';
 
 function ChatContainer() {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
-    const { activeConversation, messages } = useSelector((state) => state.chat);
+    const { activeConversation } = useSelector((state) => state.chat);
 
     const dispatch = useDispatch();
 
