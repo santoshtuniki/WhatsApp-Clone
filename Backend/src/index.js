@@ -1,41 +1,47 @@
 // module imports
 import mongoose from 'mongoose';
+import { Server } from 'socket.io';
 
 // component imports
 import app from './app.js';
 import logger from './configs/logger.config.js';
+import connectDB from './database/connectDB.js';
 
 // env variables
-const PORT = process.env.PORT || 8000;
-const { DATABASE_URL } = process.env;
-console.log('env: ', process.env.NODE_ENV);
+const { CLIENT_ENDPOINT, PORT, NODE_ENV } = process.env;
+console.log('env: ', NODE_ENV);
+
+// express PORT
+const EXPRESS_PORT = PORT || 8000;
 
 // mongodb debug mode
-if (process.env.NODE_ENV !== 'production') {
+if (NODE_ENV !== 'production') {
     mongoose.set('debug', true);
 }
 
 // mongodb connection
-(async () => {
-    try {
-        await mongoose.connect(DATABASE_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        logger.info('Connected to Mongodb');
-    } catch (error) {
-        logger.error(`Mongodb connection error: ${error.message}`);
-        process.exit(1);
-    }
-})();
+connectDB();
 
 // listen on port
 let server;
 
-server = app.listen(PORT, () => {
-    logger.info(`Server is listening to PORT ${PORT}.`);
+server = app.listen(EXPRESS_PORT, () => {
+    logger.info(`Server is listening to PORT ${EXPRESS_PORT}.`);
     // console.log('process id: ', process.pid);
     // throw new Error('error in server..')
+})
+
+// socket.io Server
+const io = new Server(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: CLIENT_ENDPOINT
+    }
+})
+
+// socket connection
+io.on('connection', (socket) => {
+    logger.info('socket io connected successfully.');
 })
 
 // handle server errors

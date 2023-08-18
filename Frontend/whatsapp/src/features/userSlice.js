@@ -17,7 +17,10 @@ const initialState = {
 }
 
 // env variables
-const AUTH_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
+const { REACT_APP_API_ENDPOINT } = process.env;
+
+// endPoints
+const AUTH_ENDPOINT = `${REACT_APP_API_ENDPOINT}/auth`;
 
 // functions
 export const registerUser = createAsyncThunk('auth/register', async (values, { rejectWithValue }) => {

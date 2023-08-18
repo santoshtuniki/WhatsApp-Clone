@@ -1,11 +1,18 @@
 // module imports
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { io } from 'socket.io-client';
 
 // component imports
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
+
+// env variables
+const { REACT_APP_SOCKET_ENDPOINT } = process.env;
+
+// socket instance
+const socket = io(REACT_APP_SOCKET_ENDPOINT);
 
 function App() {
 	const { user } = useSelector((state) => state.user);
