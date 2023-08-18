@@ -13,8 +13,11 @@ import AuthInput from './AuthInput';
 import { changeStatus, registerUser } from '../../features/userSlice';
 import Picture from './Picture';
 
-const cloud_secret = process.env.REACT_APP_CLOUD_SECRET;
-const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+// env variables
+const {
+	REACT_APP_CLOUD_SECRET: cloud_secret,
+	REACT_APP_CLOUD_NAME: cloud_name
+} = process.env;
 
 function RegisterForm() {
 

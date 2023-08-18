@@ -4,9 +4,8 @@ import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 
 // component imports
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Login from './pages/Login';
+import { Home, Login, Register } from './pages';
+import SocketContext from './context/SocketContext';
 
 // env variables
 const { REACT_APP_SOCKET_ENDPOINT } = process.env;
@@ -20,25 +19,27 @@ function App() {
 
 	return (
 		<div className='dark'>
-			<Router>
-				<Routes>
-					<Route
-						exact
-						path='/'
-						element={token ? <Home /> : <Navigate to='/login' />}
-					/>
-					<Route
-						exact
-						path='/login'
-						element={!token ? <Login /> : <Navigate to='/' />}
-					/>
-					<Route
-						exact
-						path='/register'
-						element={!token ? <Register /> : <Navigate to='/' />}
-					/>
-				</Routes>
-			</Router>
+			<SocketContext.Provider value={socket}>
+				<Router>
+					<Routes>
+						<Route
+							exact
+							path='/'
+							element={token ? <Home /> : <Navigate to='/login' />}
+						/>
+						<Route
+							exact
+							path='/login'
+							element={!token ? <Login /> : <Navigate to='/' />}
+						/>
+						<Route
+							exact
+							path='/register'
+							element={!token ? <Register /> : <Navigate to='/' />}
+						/>
+					</Routes>
+				</Router>
+			</SocketContext.Provider>
 		</div>
 	);
 }
