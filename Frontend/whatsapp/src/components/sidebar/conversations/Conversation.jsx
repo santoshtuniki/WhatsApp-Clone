@@ -1,13 +1,18 @@
 // module imports
 import { useSelector, useDispatch } from 'react-redux';
+import { useContext } from 'react';
 
 // component imports
 import dateHandler from '../../../utils/date';
 import getConversationId from '../../../utils/chat';
 import capitalize from '../../../utils/string';
 import { open_create_conversation } from '../../../features/chatSlice';
+import SocketContext from '../../../context/SocketContext';
 
 function Conversation({ convo }) {
+    // context
+    const socket = useContext(SocketContext);
+
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
@@ -22,18 +27,18 @@ function Conversation({ convo }) {
     }
 
     const openConversation = async () => {
-        await dispatch(open_create_conversation(values))
+        const newConversation = await dispatch(open_create_conversation(values))
+        console.log(newConversation)
+        await socket.emit('join conversation', newConversation.payload._id);
     }
 
     return (
         <li
             onClick={() => openConversation()}
             className={
-                `list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${
-                    convo._id !== activeConversation._id ? 'dark:bg-dark_bg_2' : ''
+                `list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${convo._id !== activeConversation._id ? 'dark:bg-dark_bg_2' : ''
                 }
-                 cursor-pointer dark:text-dark_text_1 px-[10px] ${
-                    convo._id === activeConversation._id ? 'dark:bg-dark_hover_1' : ''
+                 cursor-pointer dark:text-dark_text_1 px-[10px] ${convo._id === activeConversation._id ? 'dark:bg-dark_hover_1' : ''
                 }`
             }
         >

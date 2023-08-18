@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 import app from './app.js';
 import logger from './configs/logger.config.js';
 import connectDB from './database/connectDB.js';
+import SocketServer from './SocketServer.js';
 
 // env variables
 const { CLIENT_ENDPOINT, PORT, NODE_ENV } = process.env;
@@ -42,6 +43,7 @@ const io = new Server(server, {
 // socket connection
 io.on('connection', (socket) => {
     logger.info('socket io connected successfully.');
+    SocketServer(socket);
 })
 
 // handle server errors
