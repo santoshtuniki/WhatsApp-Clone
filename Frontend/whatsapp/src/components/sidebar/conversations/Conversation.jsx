@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 // component imports
 import dateHandler from '../../../utils/date';
-import getConversationId from '../../../utils/chat';
+import { getConversationId, getConversationName, getConversationPicture } from '../../../utils/chat';
 import capitalize from '../../../utils/string';
 import { open_create_conversation } from '../../../features/chatSlice';
 import SocketContext from '../../../context/SocketContext';
@@ -28,7 +28,6 @@ function Conversation({ convo }) {
 
     const openConversation = async () => {
         const newConversation = await dispatch(open_create_conversation(values))
-        console.log(newConversation)
         await socket.emit('join conversation', newConversation.payload._id);
     }
 
@@ -49,8 +48,8 @@ function Conversation({ convo }) {
                     {/* Conversation user picture */}
                     <div className='relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden'>
                         <img
-                            src={convo.picture}
-                            alt={convo.name}
+                            src={getConversationPicture(user, convo.users)}
+                            alt='picture'
                             className='w-full h-full object-cover'
                         />
                     </div>
@@ -58,7 +57,7 @@ function Conversation({ convo }) {
                     <div className='w-full flex flex-col'>
                         {/* Conversation name */}
                         <h1 className='font-bold flex items-center gap-x-2'>
-                            {capitalize(convo.name)}
+                            {capitalize(getConversationName(user, convo.users))}
                         </h1>
                         {/* Conversation message */}
                         <div>

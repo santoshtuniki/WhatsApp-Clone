@@ -6,7 +6,7 @@ import { useContext, useEffect } from 'react';
 import { Sidebar } from '../components/sidebar';
 import { ChatContainer } from '../components/chat';
 import { WhatsappHome } from '../components/chat/welcome';
-import { getConversations } from '../features/chatSlice';
+import { getConversations, updateMessagesAndConversations } from '../features/chatSlice';
 import SocketContext from '../context/SocketContext';
 
 function Home() {
@@ -22,8 +22,14 @@ function Home() {
     //join user into the socket io
     useEffect(() => {
         socket.emit('join', user._id);
-    }, [user]);
+    }, [user])
 
+    // listening message
+    useEffect(() => {
+        socket.on('received message', (message) => {
+            dispatch(updateMessagesAndConversations(message))
+        })
+    }, [])
 
     // componentDidMount
     useEffect(() => {

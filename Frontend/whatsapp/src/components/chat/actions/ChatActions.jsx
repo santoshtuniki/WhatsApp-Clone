@@ -1,5 +1,5 @@
 // module imports
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 
@@ -8,6 +8,7 @@ import { EmojiPickerApp, Input } from './index';
 import { Attachments } from './attachments';
 import { SendIcon } from '../../../svg';
 import { sendMessage } from '../../../features/chatSlice';
+import SocketContext from '../../../context/SocketContext';
 
 function ChatActions() {
     const [message, setMessage] = useState('');
@@ -15,6 +16,9 @@ function ChatActions() {
     const [showPicker, setShowPicker] = useState(false);
     const [showAttachments, setShowAttachments] = useState(false);
     const textRef = useRef();
+
+    // context
+    const socket = useContext(SocketContext);
 
     // Redux
     const { user } = useSelector((state) => state.user);
@@ -34,7 +38,10 @@ function ChatActions() {
     const sendMessageHandler = async (e) => {
         e.preventDefault();
         setLoading(true);
-        await dispatch(sendMessage(values));
+
+        const newMessage = await dispatch(sendMessage(values));
+        socket.emit('send message', newMessage.payload);
+
         setMessage('');
         setLoading(false);
     }

@@ -33,7 +33,7 @@ function ChatMessages() {
                         <Message
                             message={message}
                             key={message._id}
-                            me={user._id}
+                            me={user._id === message.sender._id}
                         />
                     ))
                 }
