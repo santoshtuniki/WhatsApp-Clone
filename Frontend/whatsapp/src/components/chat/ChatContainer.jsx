@@ -9,7 +9,7 @@ import { ChatActions } from './actions';
 import { getConversationMessages } from '../../features/chatSlice';
 import { checkOnlineStatus } from '../../utils/chat';
 
-function ChatContainer({ onlineUsers }) {
+function ChatContainer({ onlineUsers, typing }) {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
@@ -38,7 +38,7 @@ function ChatContainer({ onlineUsers }) {
                     online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
                 />
                 {/* Chat messages */}
-                <ChatMessages />
+                <ChatMessages typing={typing} />
                 {/* Chat Actions */}
                 <ChatActions />
             </div>

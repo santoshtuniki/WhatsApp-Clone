@@ -40,6 +40,15 @@ function SocketServer(socket, io) {
             socket.in(user._id).emit('received message', message);
         });
     })
+
+    // typing
+    socket.on('typing', (conversation) => {
+        socket.in(conversation).emit('typing');
+    })
+
+    socket.on('stop typing', (conversation) => {
+        socket.in(conversation).emit('stop typing');
+    })
 }
 
 // Default export
