@@ -1,6 +1,6 @@
 // module imports
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // component imports
 import { Sidebar } from '../components/sidebar';
@@ -19,9 +19,16 @@ function Home() {
 
     const dispatch = useDispatch();
 
+    const [onlineUsers, setOnlineUsers] = useState([]);
+
     //join user into the socket io
     useEffect(() => {
         socket.emit('join', user._id);
+
+        // get online users
+        socket.on('get-online-users', (users) => {
+            return setOnlineUsers(users);
+        });
     }, [user])
 
     // listening message
@@ -48,9 +55,9 @@ function Home() {
             {/* Container */}
             <div className='container flex h-screen py-[19px]'>
                 {/* Sidebar */}
-                <Sidebar />
+                <Sidebar onlineUsers={onlineUsers} />
                 {
-                    activeConversation?._id ? <ChatContainer /> : <WhatsappHome />
+                    activeConversation?._id ? <ChatContainer onlineUsers={onlineUsers}/> : <WhatsappHome />
                 }
             </div>
         </div>

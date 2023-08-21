@@ -1,16 +1,29 @@
-// component imports
+let onlineUsers = [];
 
-function SocketServer(socket) {
+function SocketServer(socket, io) {
     // user joins or opens connection
     socket.on('join', (user) => {   // user_id
         socket.join(user);
-        console.log('user has joined: ', user);
+
+        // add joined users to onlineUsers
+        if (!onlineUsers.some(u => u.userId === user)) {
+            console.log(`user ${user} is online.`)
+            onlineUsers.push({ userId: user, socketId: socket.id })
+        }
+
+        // send online users to frontend
+        io.emit('get-online-users', onlineUsers);
+    })
+
+    // socket disconnect
+    socket.on('disconnect', () => {
+        onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
+        io.emit('get-online-users', onlineUsers);
     })
 
     // join conversation
     socket.on('join conversation', (conversation) => {  // conversation._id
         socket.join(conversation);
-        console.log('user has joined the conversation: ', conversation);
     })
 
     // send and receive message

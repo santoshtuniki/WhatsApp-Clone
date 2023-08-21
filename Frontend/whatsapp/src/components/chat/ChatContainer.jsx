@@ -7,8 +7,9 @@ import { ChatHeader } from './header';
 import { ChatMessages } from './messages';
 import { ChatActions } from './actions';
 import { getConversationMessages } from '../../features/chatSlice';
+import { checkOnlineStatus } from '../../utils/chat';
 
-function ChatContainer() {
+function ChatContainer({ onlineUsers }) {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
@@ -23,7 +24,7 @@ function ChatContainer() {
 
     // componentDidUpdate
     useEffect(() => {
-        if (activeConversation?._id) {
+        if (activeConversation._id) {
             dispatch(getConversationMessages(values))
         }
     }, [activeConversation]);
@@ -33,7 +34,9 @@ function ChatContainer() {
             {/* Container */}
             <div>
                 {/* Chat header */}
-                <ChatHeader />
+                <ChatHeader
+                    online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
+                />
                 {/* Chat messages */}
                 <ChatMessages />
                 {/* Chat Actions */}

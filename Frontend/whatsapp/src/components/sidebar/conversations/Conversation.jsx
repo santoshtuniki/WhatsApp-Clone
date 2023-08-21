@@ -9,7 +9,7 @@ import capitalize from '../../../utils/string';
 import { open_create_conversation } from '../../../features/chatSlice';
 import SocketContext from '../../../context/SocketContext';
 
-function Conversation({ convo }) {
+function Conversation({ convo, online }) {
     // context
     const socket = useContext(SocketContext);
 
@@ -46,7 +46,7 @@ function Conversation({ convo }) {
                 {/* Left */}
                 <div className='flex items-center gap-x-3'>
                     {/* Conversation user picture */}
-                    <div className='relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden'>
+                    <div className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${online ? 'online' : ''}`}>
                         <img
                             src={getConversationPicture(user, convo.users)}
                             alt='picture'
