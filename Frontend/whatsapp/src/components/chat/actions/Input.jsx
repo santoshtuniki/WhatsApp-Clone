@@ -22,7 +22,7 @@ function Input({ message, setMessage, textRef }) {
         }
 
         const lastTypingTime = new Date().getTime();
-        const timer = 2000;
+        const timer = 1000;
         setTimeout(() => {
             const timeNow = new Date().getTime();
             const timeDiff = timeNow - lastTypingTime;

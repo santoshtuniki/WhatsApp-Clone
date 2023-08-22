@@ -43,7 +43,7 @@ function SocketServer(socket, io) {
 
     // typing
     socket.on('typing', (conversation) => {
-        socket.in(conversation).emit('typing');
+        socket.in(conversation).emit('typing', conversation);
     })
 
     socket.on('stop typing', (conversation) => {

@@ -7,7 +7,7 @@ import { Notifications } from './notifications';
 import { Search, SearchResults } from './search';
 import { Conversations } from './conversations';
 
-function Sidebar({ onlineUsers }) {
+function Sidebar({ onlineUsers, typing }) {
     const [searchResults, setSearchResults] = useState([]);
 
     return (
@@ -25,7 +25,10 @@ function Sidebar({ onlineUsers }) {
                         setSearchResults={setSearchResults}
                     />
                 ) : (
-                    < Conversations onlineUsers={onlineUsers} />
+                    < Conversations
+                        onlineUsers={onlineUsers}
+                        typing={typing}
+                    />
                 )
             }
         </div>

@@ -40,10 +40,10 @@ function Home() {
         })
 
         // listening when a user is typing
-        socket.on('received message', () => setTyping(true));
+        socket.on('typing', (conversation) => setTyping(conversation));
 
         // listening when a user stops typing
-        socket.on('received message', () => setTyping(false));
+        socket.on('stop typing', () => setTyping(false));
     }, [])
 
     // componentDidMount
@@ -63,7 +63,10 @@ function Home() {
             {/* Container */}
             <div className='container flex h-screen py-[19px]'>
                 {/* Sidebar */}
-                <Sidebar onlineUsers={onlineUsers} />
+                <Sidebar
+                    onlineUsers={onlineUsers}
+                    typing={typing}
+                />
                 {
                     activeConversation?._id ? (
                         <ChatContainer

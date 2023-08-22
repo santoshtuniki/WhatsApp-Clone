@@ -7,14 +7,15 @@ import { Message, Typing } from './index';
 
 function ChatMessages({ typing }) {
     // Redux
-    const { messages } = useSelector((state) => state.chat);
+    const { messages, activeConversation } = useSelector((state) => state.chat);
     const { user } = useSelector((state) => state.user);
+
     const endRef = useRef();
 
     // componentDidUpdate
     useEffect(() => {
         scrollToBottom();
-    }, [messages])
+    }, [messages, typing])
 
     const scrollToBottom = () => {
         endRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -38,7 +39,7 @@ function ChatMessages({ typing }) {
                     ))
                 }
                 {
-                    typing ? <Typing /> : null
+                    typing === activeConversation._id ? <Typing /> : null
                 }
                 <div className='mt-2' ref={endRef}></div>
             </div>
