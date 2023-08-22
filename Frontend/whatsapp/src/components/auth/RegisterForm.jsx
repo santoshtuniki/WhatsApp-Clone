@@ -48,7 +48,6 @@ function RegisterForm() {
 		formData.append('file', picture);
 		// uploading
 		const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData);
-		console.log('data', data);
 		return data;
 	}
 
@@ -134,7 +133,7 @@ function RegisterForm() {
 					{/* Sign in link */}
 					<p className='flex flex-col items-center justify-center mt-10 text-center text-md dark:text-dark_text_1'>
 						<span>Have an account ? </span>
-						<Link href='/login' className='hover:underline cursor-pointer transition ease-in duration-300'>
+						<Link to='/login' className='hover:underline cursor-pointer transition ease-in duration-300'>
 							Sign in
 						</Link>
 					</p>

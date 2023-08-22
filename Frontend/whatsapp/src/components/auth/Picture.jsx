@@ -1,6 +1,8 @@
 // module imports
 import { useRef, useState } from 'react';
 
+const imageTypes = ['image/png', 'image/jpeg', 'image/webp'];
+
 function Picture({ readablePicture, setReadablePicture, setPicture }) {
 
     const [error, setError] = useState('');
@@ -9,19 +11,22 @@ function Picture({ readablePicture, setReadablePicture, setPicture }) {
 
     const handlePicture = (e) => {
         const pic = e.target.files[0];
-        if (
-            pic.type !== 'image/png' &&
-            pic.type !== 'image/jpg' &&
-            pic.type !== 'image/jpeg' &&
-            pic.type !== 'image/webp'
-        ) {
+
+        const checkType = (type) => {
+            return imageTypes.some((img) => img === type)
+        }
+
+        // check file type
+        if (!checkType(pic.type)) {
             setError(`${pic.name} format is not supported.`);
             return;
         }
+        // check file size
         else if (pic.size > 1024 * 1024 * 5) {  // 5MB
             setError(`${pic.name} is too large, maximum 5 MB allowed.`);
             return;
         }
+        // else read picture
         else {
             setError('');
             setPicture(pic);
@@ -74,8 +79,12 @@ function Picture({ readablePicture, setReadablePicture, setPicture }) {
             }
             {/* input upload */}
             <input
-                type='file' name='picture' id='picture' hidden ref={inputRef}
-                accept='image/png, image/jpeg, image/jpg, image/webp'
+                type='file'
+                name='picture'
+                id='picture'
+                hidden
+                ref={inputRef}
+                accept={imageTypes.join(', ')}
                 onChange={handlePicture}
             />
             {/* error */}

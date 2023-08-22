@@ -10,6 +10,7 @@ const initialState = {
     activeConversation: {},
     messages: [],
     notifications: [],
+    files: [],
 }
 
 // env variables
@@ -107,6 +108,9 @@ const chatSlice = createSlice({
 
             state.conversations = newConversations;
         },
+        addFiles: (state, action) => {
+            state.files = [...state.files, action.payload];
+        },
     },
     extraReducers: (builder) => {
         // getConversations
@@ -174,7 +178,7 @@ const chatSlice = createSlice({
 })
 
 // named exports
-export const { setActiveConversation, updateMessagesAndConversations } = chatSlice.actions;
+export const { setActiveConversation, updateMessagesAndConversations, addFiles } = chatSlice.actions;
 
 // Default exports
 export default chatSlice.reducer;

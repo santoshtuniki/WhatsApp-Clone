@@ -1,6 +1,6 @@
 // component imports
 import { AttachmentIcon } from '../../../../svg';
-import Menu from './Menu';
+import { Menu } from './menu';
 
 function Attachments({ showAttachments, setShowAttachments, setShowPicker }) {
 
