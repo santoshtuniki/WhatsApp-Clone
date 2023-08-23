@@ -49,7 +49,7 @@ function Conversation({ convo, online, typing }) {
                     <div className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${online ? 'online' : ''}`}>
                         <img
                             src={getConversationPicture(user, convo.users)}
-                            alt='picture'
+                            alt=''
                             className='w-full h-full object-cover'
                         />
                     </div>

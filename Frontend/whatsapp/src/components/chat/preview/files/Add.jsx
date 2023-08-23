@@ -3,22 +3,23 @@ import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 // component imports
-import { DocumentIcon } from '../../../../../svg';
-import { addFiles } from '../../../../../features/chatSlice';
-import { getFileType, fileTypes, checkType } from '../../../../../utils/file';
+import { CloseIcon } from '../../../../svg';
+import { addFiles } from '../../../../features/chatSlice';
+import { getFileType, imageTypes, fileTypes, checkType } from '../../../../utils/file';
 
-function DocumentAttachment() {
+function Add() {
     // Redux
     const dispatch = useDispatch();
 
     const inputRef = useRef();
 
-    const documentHandler = (e) => {
-        let files = Array.from(e.target.files);
+    const referenceTypes = [...fileTypes, ...imageTypes];
 
+    const fileHandler = (e) => {
+        let files = Array.from(e.target.files);
         files.forEach((file) => {
             // check file type
-            if (!checkType(file.type, fileTypes)) {
+            if (!checkType(file.type, referenceTypes)) {
                 files = files.filter((item) => item.name !== file.name);
                 return;
             }
@@ -34,35 +35,37 @@ function DocumentAttachment() {
                 reader.onload = async (e) => {
                     const values = {
                         file: file,
-                        fileData: '',
+                        fileData: getFileType(file.type) === 'IMAGE' ? e.target.result : '',
                         type: getFileType(file.type),
-                    }
+                    };
                     await dispatch(addFiles(values));
                 };
             }
-        })
-    }
+        });
+    };
 
     return (
-        <li>
-            <button
-                type='button'
-                className='bg-[#5F66CD] rounded-full'
+        <>
+            <div
                 onClick={() => inputRef.current.click()}
+                className='w-14 h-14 mt-2 border dark:border-white rounded-md flex items-center justify-center cursor-pointer'
             >
-                <DocumentIcon />
-            </button>
+                <span className='rotate-45'>
+                    <CloseIcon className='dark:fill-dark_svg_1' />
+                </span>
+            </div>
+
             <input
                 type='file'
                 hidden
                 multiple
                 ref={inputRef}
-                accept='application/*,text/plain'
-                onChange={documentHandler}
+                accept={`application/*,text/plain, ${imageTypes.join(', ')}`}
+                onChange={fileHandler}
             />
-        </li>
-    )
+        </>
+    );
 }
 
 // Default export
-export default DocumentAttachment;
+export default Add

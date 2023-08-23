@@ -8,12 +8,13 @@ import { ChatMessages } from './messages';
 import { ChatActions } from './actions';
 import { getConversationMessages } from '../../features/chatSlice';
 import { checkOnlineStatus } from '../../utils/chat';
+import { FilesPreview } from './preview/files';
 
 function ChatContainer({ onlineUsers, typing }) {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
-    const { activeConversation } = useSelector((state) => state.chat);
+    const { activeConversation, files } = useSelector((state) => state.chat);
 
     const dispatch = useDispatch();
 
@@ -37,10 +38,18 @@ function ChatContainer({ onlineUsers, typing }) {
                 <ChatHeader
                     online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
                 />
-                {/* Chat messages */}
-                <ChatMessages typing={typing} />
-                {/* Chat Actions */}
-                <ChatActions />
+                {
+                    files.length > 0 ? (
+                        <FilesPreview />
+                    ) : (
+                        <>
+                            {/* Chat messages */}
+                            <ChatMessages typing={typing} />
+                            {/* Chat Actions */}
+                            <ChatActions />
+                        </>
+                    )
+                }
             </div>
         </div>
     )

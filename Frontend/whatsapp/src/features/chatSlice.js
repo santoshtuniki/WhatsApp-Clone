@@ -111,74 +111,79 @@ const chatSlice = createSlice({
         addFiles: (state, action) => {
             state.files = [...state.files, action.payload];
         },
+        clearFiles: (state) => {
+            state.files = [];
+        },
     },
     extraReducers: (builder) => {
         // getConversations
         builder.addCase(getConversations.pending, (state) => {
-            state.status = 'loading'
+            state.status = 'loading';
         })
         builder.addCase(getConversations.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.conversations = action.payload
-            state.error = ''
+            state.status = 'succeeded';
+            state.conversations = action.payload;
         })
         builder.addCase(getConversations.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.payload
+            state.status = 'failed';
+            state.error = action.payload;
         })
         // open_create_conversation
         builder.addCase(open_create_conversation.pending, (state) => {
-            state.status = 'loading'
+            state.status = 'loading';
         })
         builder.addCase(open_create_conversation.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.activeConversation = action.payload
-            state.error = ''
+            state.status = 'succeeded';
+            state.activeConversation = action.payload;
+            state.files = [];
         })
         builder.addCase(open_create_conversation.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.payload
+            state.status = 'failed';
+            state.error = action.payload;
         })
         // getConversationMessages
         builder.addCase(getConversationMessages.pending, (state) => {
-            state.status = 'loading'
+            state.status = 'loading';
         })
         builder.addCase(getConversationMessages.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.messages = action.payload
-            state.error = ''
+            state.status = 'succeeded';
+            state.messages = action.payload;
         })
         builder.addCase(getConversationMessages.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.payload
+            state.status = 'failed';
+            state.error = action.payload;
         })
         // sendMessage
         builder.addCase(sendMessage.pending, (state) => {
-            state.status = 'loading'
+            state.status = 'loading';
         })
         builder.addCase(sendMessage.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.error = ''
-            state.messages = [...state.messages, action.payload]
+            state.status = 'succeeded';
+            state.messages = [...state.messages, action.payload];
 
             const conversation = {
                 ...action.payload.conversation,
                 latestMessage: action.payload
-            }
+            };
             const newConversations = [...state.conversations].filter((convo) => convo._id !== conversation._id);
             newConversations.unshift(conversation);
 
             state.conversations = newConversations;
         })
         builder.addCase(sendMessage.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.payload
+            state.status = 'failed';
+            state.error = action.payload;
         })
     }
 })
 
 // named exports
-export const { setActiveConversation, updateMessagesAndConversations, addFiles } = chatSlice.actions;
+export const {
+    setActiveConversation,
+    updateMessagesAndConversations,
+    addFiles,
+    clearFiles,
+} = chatSlice.actions;
 
 // Default exports
 export default chatSlice.reducer;

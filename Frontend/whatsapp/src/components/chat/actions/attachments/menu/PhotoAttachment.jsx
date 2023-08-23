@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux';
 // component imports
 import { PhotoIcon } from '../../../../../svg';
 import { addFiles } from '../../../../../features/chatSlice';
-import { getFileType } from '../../../../../utils/file';
-import { imageTypes } from '../../../../../utils/type';
+import { getFileType, imageTypes, checkType } from '../../../../../utils/file';
 
 function PhotoAttachment() {
     // Redux
@@ -14,16 +13,12 @@ function PhotoAttachment() {
 
     const inputRef = useRef();
 
-    const checkType = (type) => {
-        return imageTypes.some((image_type) => image_type === type)
-    }
-
     const imageHandler = (e) => {
         let files = Array.from(e.target.files);
 
         files.forEach((file) => {
             // check file type
-            if (!checkType(file.type)) {
+            if (!checkType(file.type, imageTypes)) {
                 files = files.filter((item) => item.name !== file.name);
                 return;
             }
