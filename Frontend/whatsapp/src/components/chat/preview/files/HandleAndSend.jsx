@@ -1,16 +1,26 @@
 // module imports
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // component imports
 import { Add } from './index';
 import { SendIcon } from '../../../../svg';
-
+import { uploadFiles } from '../../../../utils/upload';
+import { sendMessage } from '../../../../features/chatSlice';
+import SocketContext from '../../../../context/SocketContext';
 
 function HandleAndSend({ activeIndex, setActiveIndex, message }) {
+	// socket
+	const socket = useContext(SocketContext);
+
 	// Redux
-	const { files } = useSelector((state) => state.chat);
+	const { files, activeConversation } = useSelector((state) => state.chat);
+
+	const { user } = useSelector((state) => state.user);
+	const { token } = user;
+
+	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(false);
 
@@ -18,6 +28,20 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 	const sendMessageHandler = async (e) => {
 		e.preventDefault();
 		setLoading(true);
+
+		//uplaod files first
+		const uploaded_files = await uploadFiles(files);
+
+		//send the message
+		const values = {
+			token,
+			message,
+			convo_id: activeConversation._id,
+			files: uploaded_files.length > 0 ? uploaded_files : [],
+		};
+		let newMsg = await dispatch(sendMessage(values));
+		socket.emit("send message", newMsg.payload);
+		setLoading(false);
 	}
 
 	return (
@@ -57,7 +81,7 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 				}
 
 				{/* Add another file */}
-				<Add setActiveIndex={setActiveIndex} />
+				<Add />
 			</div>
 
 			{/*Send button*/}

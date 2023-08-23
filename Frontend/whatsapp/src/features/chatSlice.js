@@ -1,6 +1,8 @@
 // module imports
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+
+// component imports
+import { getService, postService } from '../services/chatSlice.Service';
 
 // initial state
 const initialState = {
@@ -22,65 +24,26 @@ const MESSAGE_ENDPOINT = `${REACT_APP_API_ENDPOINT}/message`;
 
 // functions
 export const getConversations = createAsyncThunk('conversation/all', async (token, { rejectWithValue }) => {
-    try {
-        const { data } = await axios.get(CONVERSATION_ENDPOINT, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await getService(CONVERSATION_ENDPOINT, token, rejectWithValue);
+    return response;
 })
 
 export const open_create_conversation = createAsyncThunk('conversation/open_create', async (values, { rejectWithValue }) => {
     const { token, receiver_id } = values;
-    try {
-        const { data } = await axios.post(CONVERSATION_ENDPOINT, { receiver_id }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await postService(CONVERSATION_ENDPOINT, { receiver_id }, token, rejectWithValue);
+    return response;
 })
 
 export const getConversationMessages = createAsyncThunk('conversation/messages', async (values, { rejectWithValue }) => {
     const { token, conversation_id } = values;
-    try {
-        const { data } = await axios.get(`${MESSAGE_ENDPOINT}/${conversation_id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await getService(`${MESSAGE_ENDPOINT}/${conversation_id}`, token, rejectWithValue);
+    return response;
 })
 
 export const sendMessage = createAsyncThunk('message/send', async (values, { rejectWithValue }) => {
     const { token, message, conversation_id, files } = values;
-    try {
-        const { data } = await axios.post(
-            MESSAGE_ENDPOINT,
-            {
-                message,
-                conversation_id,
-                files
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await postService(MESSAGE_ENDPOINT, { message, conversation_id, files }, token, rejectWithValue);
+    return response;
 })
 
 // chatSlice

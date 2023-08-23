@@ -5,19 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
 
 // component imports
 import { signUpSchema } from '../../utils/validation';
 import AuthInput from './AuthInput';
 import { changeStatus, registerUser } from '../../features/userSlice';
 import Picture from './Picture';
-
-// env variables
-const {
-	REACT_APP_CLOUD_SECRET: cloud_secret,
-	REACT_APP_CLOUD_NAME: cloud_name
-} = process.env;
+import { uploadImage } from '../../utils/upload';
 
 function RegisterForm() {
 
@@ -42,22 +36,13 @@ function RegisterForm() {
 		resolver: yupResolver(signUpSchema),
 	});
 
-	const uploadImage = async () => {
-		const formData = new FormData();
-		formData.append('upload_preset', cloud_secret);
-		formData.append('file', picture);
-		// uploading
-		const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData);
-		return data;
-	}
-
 	const onSubmit = async (data) => {
 		let res;
 		await dispatch(changeStatus('loading'));
 
 		if (picture) {
 			// upload to cloudinary, then register user
-			await uploadImage().then(async (result) => {
+			await uploadImage(picture).then(async (result) => {
 				res = await dispatch(registerUser({ ...data, picture: result.secure_url }));
 			})
 		} else {

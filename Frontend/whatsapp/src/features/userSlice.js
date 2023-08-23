@@ -1,6 +1,8 @@
 // module imports
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+
+// component imports
+import { postService } from '../services/userSlice.Service';
 
 // initial state
 const initialState = {
@@ -24,21 +26,13 @@ const AUTH_ENDPOINT = `${REACT_APP_API_ENDPOINT}/auth`;
 
 // functions
 export const registerUser = createAsyncThunk('auth/register', async (values, { rejectWithValue }) => {
-    try {
-        const { data } = await axios.post(`${AUTH_ENDPOINT}/register`, { ...values });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await postService(`${AUTH_ENDPOINT}/register`, { ...values }, rejectWithValue);
+    return response;
 })
 
 export const loginUser = createAsyncThunk('auth/login', async (values, { rejectWithValue }) => {
-    try {
-        const { data } = await axios.post(`${AUTH_ENDPOINT}/login`, { ...values });
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data.error.message);
-    }
+    const response = await postService(`${AUTH_ENDPOINT}/login`, { ...values }, rejectWithValue);
+    return response;
 })
 
 // userSlice
