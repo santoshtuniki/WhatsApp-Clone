@@ -2,12 +2,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import { useContext, useState } from 'react';
+import VideoThumbnail from 'react-video-thumbnail';
 
 // component imports
 import { Add } from './index';
-import { SendIcon } from '../../../../svg';
+import { SendIcon, CloseIcon } from '../../../../svg';
 import { uploadFiles } from '../../../../utils/upload';
-import { sendMessage } from '../../../../features/chatSlice';
+import { sendMessage, removeFileFromFiles } from '../../../../features/chatSlice';
 import SocketContext from '../../../../context/SocketContext';
 
 function HandleAndSend({ activeIndex, setActiveIndex, message }) {
@@ -42,7 +43,12 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 		let newMsg = await dispatch(sendMessage(values));
 		socket.emit("send message", newMsg.payload);
 		setLoading(false);
-	}
+	};
+
+	//Handle remove file
+	const handleRemoveFile = (index) => {
+		dispatch(removeFileFromFiles(index));
+	};
 
 	return (
 		<div className='w-[97%] flex items-center justify-between mt-2 border-t dark:border-dark_border_2'>
@@ -68,6 +74,8 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 										alt=""
 										className="w-full h-full object-cover"
 									/>
+								) : file.type === "VIDEO" ? (
+									<VideoThumbnail videoUrl={file.fileData} />
 								) : (
 									<img
 										src={`../../../../images/file/${file.type}.png`}
@@ -76,6 +84,11 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 									/>
 								)
 							}
+
+							{/*Remove file icon*/}
+							<div className="removeFileIcon hidden" onClick={() => handleRemoveFile(i)} >
+								<CloseIcon className="dark:fill-white absolute right-0 top-0 w-4 h-4" />
+							</div>
 						</div>
 					))
 				}
