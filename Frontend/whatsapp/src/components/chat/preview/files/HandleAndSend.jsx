@@ -8,7 +8,7 @@ import VideoThumbnail from 'react-video-thumbnail';
 import { Add } from './index';
 import { SendIcon, CloseIcon } from '../../../../svg';
 import { uploadFiles } from '../../../../utils/upload';
-import { sendMessage, removeFileFromFiles } from '../../../../features/chatSlice';
+import { sendMessage, removeFileFromFiles, clearFiles } from '../../../../features/chatSlice';
 import SocketContext from '../../../../context/SocketContext';
 
 function HandleAndSend({ activeIndex, setActiveIndex, message }) {
@@ -17,7 +17,6 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 
 	// Redux
 	const { files, activeConversation } = useSelector((state) => state.chat);
-
 	const { user } = useSelector((state) => state.user);
 	const { token } = user;
 
@@ -37,13 +36,20 @@ function HandleAndSend({ activeIndex, setActiveIndex, message }) {
 		const values = {
 			token,
 			message,
-			convo_id: activeConversation._id,
+			conversation_id: activeConversation._id,
 			files: uploaded_files.length > 0 ? uploaded_files : [],
 		};
 		let newMsg = await dispatch(sendMessage(values));
 		socket.emit("send message", newMsg.payload);
+		
 		setLoading(false);
+		clearFilesHandler();
 	};
+
+	// clear files
+	const clearFilesHandler = () => {
+        dispatch(clearFiles());
+    };
 
 	//Handle remove file
 	const handleRemoveFile = (index) => {

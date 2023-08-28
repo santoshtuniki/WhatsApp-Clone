@@ -11,6 +11,7 @@ function Header({ activeIndex }) {
 
     const dispatch = useDispatch();
 
+    // clear files
     const clearFilesHandler = () => {
         dispatch(clearFiles());
     };

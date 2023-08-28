@@ -23,7 +23,7 @@ function PhotoAttachment() {
                 return;
             }
             // check file size
-            else if (file.size > 1024 * 1024 * 10) {
+            else if (file.size > 1024 * 1024 * 10) {    // 10 MB
                 files = files.filter((item) => item.name !== file.name);
                 return;
             }

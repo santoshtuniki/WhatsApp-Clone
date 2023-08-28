@@ -25,7 +25,11 @@ function Message({ message, me }) {
                             <span>
                                 <TraingleIcon className="dark:fill-dark_bg_2 rotate-[60deg] absolute top-[-5px] -left-1.5" />
                             </span>
-                        ) : null
+                        ) : (
+                            <span>
+                                <TraingleIcon className="dark:fill-green_3 rotate-[60deg] absolute top-[-5px] -right-2.5" />
+                            </span>
+                        )
                     }
                 </div>
             </div>

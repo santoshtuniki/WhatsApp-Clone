@@ -29,17 +29,18 @@ export const getFileType = (type) => {
 };
 
 export const fileTypes = [
+    'text/plain',
     'application/pdf',
     'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     'application/vnd.rar',
     'application/zip',
     'audio/mpeg',
     'audio/wav',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'pplication/vnd.openxmlformats-officedocument.presentationml.presentation',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
 
 export const imageTypes = [
