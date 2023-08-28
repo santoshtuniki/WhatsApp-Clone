@@ -1,7 +1,30 @@
+// module imports
+import { useState, useEffect } from 'react';
+
 // component imports
 import { CloseIcon, ValidIcon } from '../../../svg';
 
-function Ringing() {
+function Ringing({ call, setCall }) {
+    const { receiveingCall, callEnded } = call;
+
+    const [timer, setTimer] = useState(0);
+
+    const handleTimer = () => {
+        setInterval(() => {
+            setTimer((prev) => prev + 1);
+        }, 1000);
+    };
+
+    // componentDidUpdate
+    useEffect(() => {
+        if (timer <= 30) {
+            handleTimer();
+        } else {
+            setCall({ ...call, receiveingCall: false });
+        }
+        
+    }, [timer]);
+
     return (
         <div className='dark:bg-dark_bg_1 rounded-lg fixed  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg z-30'>
             {/*Container*/}

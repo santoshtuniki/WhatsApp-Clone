@@ -1,10 +1,16 @@
 // component imports
 import { Ringing } from './index';
 
-function Call() {
+function Call({ call, setCall, callAccepted }) {
+    const { receiveingCall, callEnded } = call;
+
     return (
         <div>
-            <Ringing />
+            {
+                receiveingCall && !callAccepted && (
+                    <Ringing call={call} setCall={setCall} />
+                )
+            }
         </div>
     )
 }

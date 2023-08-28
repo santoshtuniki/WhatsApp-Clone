@@ -10,6 +10,12 @@ import { getConversations, updateMessagesAndConversations } from '../features/ch
 import SocketContext from '../context/SocketContext';
 import { Call } from '../components/chat/call';
 
+// callData
+const callData = {
+    receiveingCall: true,
+    callEnded: false,
+};
+
 function Home() {
     // context
     const socket = useContext(SocketContext);
@@ -20,8 +26,17 @@ function Home() {
 
     const dispatch = useDispatch();
 
+    // online State
     const [onlineUsers, setOnlineUsers] = useState([]);
+
+    // message State
     const [typing, setTyping] = useState(false);
+
+    // call State
+    const [call, setCall] = useState(callData);
+
+    const { receiveingCall, callEnded } = call;
+    const [callAccepted, setCallAccepted] = useState(false);
 
     //join user into the socket io
     useEffect(() => {
@@ -81,7 +96,11 @@ function Home() {
             </div>
 
             {/* Call */}
-            <Call />
+            <Call
+                call={call}
+                setCall={setCall}
+                callAccepted={callAccepted}
+            />
         </>
     )
 }
