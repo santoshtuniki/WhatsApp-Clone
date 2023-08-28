@@ -8,6 +8,7 @@ import { ChatContainer } from '../components/chat';
 import { WhatsappHome } from '../components/chat/welcome';
 import { getConversations, updateMessagesAndConversations } from '../features/chatSlice';
 import SocketContext from '../context/SocketContext';
+import { Call } from '../components/chat/call';
 
 function Home() {
     // context
@@ -59,24 +60,29 @@ function Home() {
     }, [user])
 
     return (
-        <div className='h-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden'>
-            {/* Container */}
-            <div className='container flex h-screen py-[19px]'>
-                {/* Sidebar */}
-                <Sidebar
-                    onlineUsers={onlineUsers}
-                    typing={typing}
-                />
-                {
-                    activeConversation?._id ? (
-                        <ChatContainer
-                            onlineUsers={onlineUsers}
-                            typing={typing}
-                        />
-                    ) : <WhatsappHome />
-                }
+        <>
+            <div className='h-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden'>
+                {/* Container */}
+                <div className='container flex h-screen py-[19px]'>
+                    {/* Sidebar */}
+                    <Sidebar
+                        onlineUsers={onlineUsers}
+                        typing={typing}
+                    />
+                    {
+                        activeConversation?._id ? (
+                            <ChatContainer
+                                onlineUsers={onlineUsers}
+                                typing={typing}
+                            />
+                        ) : <WhatsappHome />
+                    }
+                </div>
             </div>
-        </div>
+
+            {/* Call */}
+            <Call />
+        </>
     )
 }
 
