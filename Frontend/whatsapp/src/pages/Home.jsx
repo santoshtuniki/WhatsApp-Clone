@@ -12,7 +12,7 @@ import { Call } from '../components/chat/call';
 
 // callData
 const callData = {
-    receiveingCall: true,
+    receivingCall: true,
     callEnded: false,
 };
 
@@ -35,7 +35,7 @@ function Home() {
     // call State
     const [call, setCall] = useState(callData);
 
-    const { receiveingCall, callEnded } = call;
+    const { receivingCall, callEnded } = call;
     const [callAccepted, setCallAccepted] = useState(false);
 
     //join user into the socket io

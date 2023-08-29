@@ -5,24 +5,27 @@ import { useState, useEffect } from 'react';
 import { CloseIcon, ValidIcon } from '../../../svg';
 
 function Ringing({ call, setCall }) {
-    const { receiveingCall, callEnded } = call;
+    const { receivingCall, callEnded } = call;
 
     const [timer, setTimer] = useState(0);
 
+    let interval;
+
     const handleTimer = () => {
-        setInterval(() => {
+        interval = setInterval(() => {
             setTimer((prev) => prev + 1);
         }, 1000);
     };
 
     // componentDidUpdate
     useEffect(() => {
-        if (timer <= 30) {
+        if (timer <= 10) {
             handleTimer();
         } else {
-            setCall({ ...call, receiveingCall: false });
+            setCall({ ...call, receivingCall: false });
         }
-        
+
+        return () => clearInterval(interval);
     }, [timer]);
 
     return (
@@ -62,7 +65,7 @@ function Ringing({ call, setCall }) {
             </div>
 
             {/*Ringtone*/}
-            <audio src="../../../../audio/ringtone.mp3" autoPlay loop></audio>
+            <audio src='../../../../audio/ringtone.mp3' autoPlay loop />
         </div>
     )
 }

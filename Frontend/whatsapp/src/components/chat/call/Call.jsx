@@ -2,12 +2,12 @@
 import { Ringing } from './index';
 
 function Call({ call, setCall, callAccepted }) {
-    const { receiveingCall, callEnded } = call;
+    const { receivingCall, callEnded } = call;
 
     return (
         <div>
             {
-                receiveingCall && !callAccepted && (
+                receivingCall && !callAccepted && (
                     <Ringing call={call} setCall={setCall} />
                 )
             }
