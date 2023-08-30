@@ -9,11 +9,15 @@ import { WhatsappHome } from '../components/chat/welcome';
 import { getConversations, updateMessagesAndConversations } from '../features/chatSlice';
 import SocketContext from '../context/SocketContext';
 import { Call } from '../components/chat/call';
+import { getConversationName, getConversationPicture } from '../utils/chat';
 
 // callData
 const callData = {
     receivingCall: true,
     callEnded: false,
+    socketId: '',
+    name: '',
+    picture: '',
 };
 
 function Home() {
@@ -35,7 +39,7 @@ function Home() {
     // call State
     const [call, setCall] = useState(callData);
 
-    const { receivingCall, callEnded } = call;
+    const { receivingCall, callEnded, socketId } = call;
     const [callAccepted, setCallAccepted] = useState(false);
 
     // stream state
@@ -44,6 +48,38 @@ function Home() {
     // references
     const myVideo = useRef();
     const userVideo = useRef();
+
+    // callUser function
+    const callUser = () => {
+        enableMedia();
+        setCall({
+            ...call,
+            name: getConversationName(user, activeConversation.users),
+            picture: getConversationPicture(user, activeConversation.users),
+        });
+    }
+
+    // enableMedia function
+    const enableMedia = () => {
+        myVideo.current.srcObject = stream;
+    }
+
+    // setupMedia function
+    const setupMedia = () => {
+        navigator.mediaDevices
+            .getUserMedia({ video: true, audio: true })
+            .then((stream) => {
+                setStream(stream);
+            });
+    }
+
+    // call useEffect
+    useEffect(() => {
+        setupMedia();
+        socket.on("setup socket", (id) => {
+            setCall({ ...call, socketId: id });
+        });
+    }, [])
 
     //join user into the socket io
     useEffect(() => {
@@ -96,6 +132,7 @@ function Home() {
                             <ChatContainer
                                 onlineUsers={onlineUsers}
                                 typing={typing}
+                                callUser={callUser}
                             />
                         ) : <WhatsappHome />
                     }

@@ -13,6 +13,9 @@ function SocketServer(socket, io) {
 
         // send online users to frontend
         io.emit('get-online-users', onlineUsers);
+
+        //send socket id
+        io.emit("setup socket", socket.id);
     })
 
     // socket disconnect

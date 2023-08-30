@@ -10,7 +10,7 @@ import { getConversationMessages } from '../../features/chatSlice';
 import { checkOnlineStatus } from '../../utils/chat';
 import { FilesPreview } from './preview/files';
 
-function ChatContainer({ onlineUsers, typing }) {
+function ChatContainer({ onlineUsers, typing, callUser }) {
     // Redux
     const { user } = useSelector((state) => state.user);
     const { token } = user;
@@ -37,6 +37,7 @@ function ChatContainer({ onlineUsers, typing }) {
                 {/* Chat header */}
                 <ChatHeader
                     online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
+                    callUser={callUser}
                 />
                 {
                     files.length > 0 ? (

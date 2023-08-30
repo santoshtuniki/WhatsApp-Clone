@@ -12,7 +12,7 @@ function Call({
     userVideo,
     stream
 }) {
-    const { receivingCall, callEnded } = call;
+    const { receivingCall, callEnded, socketId } = call;
 
     const [showActions, setShowActions] = useState(false);
     const [toggle, setToggle] = useState(false);

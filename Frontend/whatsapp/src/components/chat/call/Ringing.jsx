@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { CloseIcon, ValidIcon } from '../../../svg';
 
 function Ringing({ call, setCall }) {
-    const { receivingCall, callEnded } = call;
+    const { receivingCall, callEnded, socketId } = call;
 
     const [timer, setTimer] = useState(0);
 
