@@ -5,6 +5,7 @@ import Header from './Header';
 import CallArea from './CallArea';
 import CallActions from './CallActions';
 import CallTimes from './CallTimes';
+import CallVideo from './CallVideo';
 
 // named exports
 export {
@@ -14,4 +15,5 @@ export {
     CallArea,
     CallActions,
     CallTimes,
+    CallVideo,
 }

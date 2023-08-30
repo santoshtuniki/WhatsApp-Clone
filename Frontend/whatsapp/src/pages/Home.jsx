@@ -1,6 +1,6 @@
 // module imports
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 
 // component imports
 import { Sidebar } from '../components/sidebar';
@@ -37,6 +37,13 @@ function Home() {
 
     const { receivingCall, callEnded } = call;
     const [callAccepted, setCallAccepted] = useState(false);
+
+    // stream state
+    const [stream, setStream] = useState();
+
+    // references
+    const myVideo = useRef();
+    const userVideo = useRef();
 
     //join user into the socket io
     useEffect(() => {
@@ -100,6 +107,9 @@ function Home() {
                 call={call}
                 setCall={setCall}
                 callAccepted={callAccepted}
+                myVideo={myVideo}
+                userVideo={userVideo}
+                stream={stream}
             />
         </>
     )

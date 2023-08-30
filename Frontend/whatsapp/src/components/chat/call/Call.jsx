@@ -2,12 +2,20 @@
 import { useState } from 'react';
 
 // component imports
-import { Ringing, Header, CallArea, CallActions } from './index';
+import { Ringing, Header, CallArea, CallActions, CallVideo } from './index';
 
-function Call({ call, setCall, callAccepted }) {
+function Call({
+    call,
+    setCall,
+    callAccepted,
+    myVideo,
+    userVideo,
+    stream
+}) {
     const { receivingCall, callEnded } = call;
 
     const [showActions, setShowActions] = useState(false);
+    const [toggle, setToggle] = useState(false);
 
     return (
         <div
@@ -32,6 +40,42 @@ function Call({ call, setCall, callAccepted }) {
                     {/*Call actions*/}
                     {
                         showActions ? <CallActions /> : null
+                    }
+                </div>
+
+                {/*Video streams*/}
+                <div>
+                    {/*user video*/}
+                    {
+                        callAccepted && !callEnded ? (
+                            <div>
+                                <video
+                                    ref={userVideo}
+                                    playsInline
+                                    muted
+                                    autoPlay
+                                    className={toggle ? 'SmallVideoCall' : 'largeVideoCall'}
+                                    onClick={() => setToggle((prev) => !prev)}
+                                ></video>
+                            </div>
+                        ) : null
+                    }
+
+                    {/*my video*/}
+                    {
+                        stream ? (
+                            <div>
+                                <video
+                                    ref={myVideo}
+                                    playsInline
+                                    muted
+                                    autoPlay
+                                    className={`${toggle ? 'largeVideoCall' : 'SmallVideoCall'} ${showActions ? 'moveVideoCall' : ''
+                                        }`}
+                                    onClick={() => setToggle((prev) => !prev)}
+                                ></video>
+                            </div>
+                        ) : null
                     }
                 </div>
             </div>
