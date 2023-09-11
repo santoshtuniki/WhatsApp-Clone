@@ -69,6 +69,16 @@ function Home() {
                 receivingCall: true,
             });
         });
+
+        socket.on('end call', () => {
+            setShow(false);
+            setCall({ ...call, callEnded: true, receivingCall: false });
+            
+            myVideo.current.srcObject = null;
+            if (callAccepted) {
+                connectionRef?.current?.destroy();
+            }
+        });
     }, [])
 
     // callUser function
@@ -131,6 +141,22 @@ function Home() {
         peer.signal(call.signal);
 
         connectionRef.current = peer;
+    };
+
+    // endCall  function
+    const endCall = () => {
+        setShow(false);
+        setCall({
+            ...call,
+            callEnded: true,
+            receivingCall: false
+        });
+
+        myVideo.current.srcObject = null;
+
+        socket.emit('end call', call.socketId);
+
+        connectionRef?.current?.destroy();
     };
 
     // enableMedia function
@@ -216,6 +242,7 @@ function Home() {
                 stream={stream}
                 answerCall={answerCall}
                 show={show}
+                endCall={endCall}
             />
         </>
     )

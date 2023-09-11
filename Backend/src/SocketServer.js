@@ -70,6 +70,11 @@ function SocketServer(socket, io) {
     socket.on('answer call', (data) => {
         io.to(data.to).emit('call accepted', data.signal);
     });
+
+    // end call
+    socket.on('end call', (id) => {
+        io.to(id).emit('end call');
+    });
 }
 
 // Default export

@@ -13,6 +13,7 @@ function Call({
     stream,
     answerCall,
     show,
+    endCall,
 }) {
     const { receivingCall, callEnded, name, picture } = call;
 
@@ -42,7 +43,7 @@ function Call({
 
                     {/*Call actions*/}
                     {
-                        showActions ? <CallActions /> : null
+                        showActions ? <CallActions endCall={endCall} /> : null
                     }
                 </div>
 
@@ -91,6 +92,7 @@ function Call({
                         call={call}
                         setCall={setCall}
                         answerCall={answerCall}
+                        endCall={endCall}
                     />
                 )
             }
