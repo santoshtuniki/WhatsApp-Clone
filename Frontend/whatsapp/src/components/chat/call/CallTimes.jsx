@@ -1,4 +1,5 @@
-import React from 'react'
+// module imports
+import { useEffect } from 'react';
 
 function CallTimes({
     totalSecInCall,
@@ -25,7 +26,7 @@ function CallTimes({
             className={
                 `text-dark_text_2 ${totalSecInCall !== 0 ? 'block' : 'hidden'}`
             }
-        >   
+        >
             {/* Hours */}
             {
                 parseInt(totalSecInCall / 3600 >= 0) ? (

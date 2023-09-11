@@ -14,10 +14,13 @@ function Sidebar({ onlineUsers, typing }) {
         <div className='flex0030 max-w-[30%] h-full select-none'>
             {/* Sidebar Header */}
             <SidebarHeader />
+
             {/* Notifications */}
             <Notifications />
+
             {/* Search */}
             <Search searchLength={searchResults.length} setSearchResults={setSearchResults} />
+            
             {
                 searchResults.length > 0 ? (
                     <SearchResults

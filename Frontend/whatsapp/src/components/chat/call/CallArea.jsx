@@ -1,5 +1,6 @@
 // component imports
 import capitalize from '../../../utils/string';
+import { CallTimes } from './index';
 
 function CallArea({
     name,
@@ -24,7 +25,7 @@ function CallArea({
                             </span>
                         ) : null
                     }
-                    
+
                     <CallTimes
                         totalSecInCall={totalSecInCall}
                         setTotalSecInCall={setTotalSecInCall}
