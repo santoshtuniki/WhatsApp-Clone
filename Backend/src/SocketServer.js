@@ -15,7 +15,7 @@ function SocketServer(socket, io) {
         io.emit('get-online-users', onlineUsers);
 
         //send socket id
-        io.emit("setup socket", socket.id);
+        io.emit('setup socket', socket.id);
     })
 
     // socket disconnect
@@ -52,6 +52,20 @@ function SocketServer(socket, io) {
     socket.on('stop typing', (conversation) => {
         socket.in(conversation).emit('stop typing');
     })
+
+    //call
+    //---call user
+    socket.on('call user', (data) => {
+        let userId = data.userToCall;
+        let userSocket = onlineUsers.find((user) => user.userId == userId);
+        
+        io.to(userSocket.socketId).emit('call user', {
+            signal: data.signal,
+            from: data.from,
+            name: data.name,
+            picture: data.picture,
+        });
+    });
 }
 
 // Default export

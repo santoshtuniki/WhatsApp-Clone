@@ -1,6 +1,7 @@
 // module imports
 import { useDispatch, useSelector } from 'react-redux';
 import { useContext, useEffect, useState, useRef } from 'react';
+import Peer from 'simple-peer';
 
 // component imports
 import { Sidebar } from '../components/sidebar';
@@ -9,11 +10,11 @@ import { WhatsappHome } from '../components/chat/welcome';
 import { getConversations, updateMessagesAndConversations } from '../features/chatSlice';
 import SocketContext from '../context/SocketContext';
 import { Call } from '../components/chat/call';
-import { getConversationName, getConversationPicture } from '../utils/chat';
+import { getConversationName, getConversationPicture, getConversationId } from '../utils/chat';
 
 // callData
 const callData = {
-    receivingCall: true,
+    receivingCall: false,
     callEnded: false,
     socketId: '',
     name: '',
@@ -57,6 +58,23 @@ function Home() {
             name: getConversationName(user, activeConversation.users),
             picture: getConversationPicture(user, activeConversation.users),
         });
+
+        // peer
+        const peer = new Peer({
+            initiator: true,
+            trickle: false,
+            stream: stream,
+        });
+
+        peer.on('signal', (data) => {
+            socket.emit('call user', {
+                userToCall: getConversationId(user, activeConversation.users),
+                signal: data,
+                from: socketId,
+                name: user.name,
+                picture: user.picture,
+            });
+        });
     }
 
     // enableMedia function
@@ -76,8 +94,19 @@ function Home() {
     // call useEffect
     useEffect(() => {
         setupMedia();
-        socket.on("setup socket", (id) => {
+        socket.on('setup socket', (id) => {
             setCall({ ...call, socketId: id });
+        });
+
+        socket.on('call user', (data) => {
+            setCall({
+                ...call,
+                socketId: data.from,
+                name: data.name,
+                picture: data.picture,
+                signal: data.signal,
+                receivingCall: true,
+            });
         });
     }, [])
 
