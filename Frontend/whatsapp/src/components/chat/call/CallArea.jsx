@@ -1,7 +1,12 @@
 // component imports
 import capitalize from '../../../utils/string';
 
-function CallArea({ name }) {
+function CallArea({
+    name,
+    callAccepted,
+    totalSecInCall,
+    setTotalSecInCall,
+}) {
     return (
         <div className='absolute top-12 z-40 w-full p-1'>
             {/*Container*/}
@@ -12,9 +17,19 @@ function CallArea({ name }) {
                         <b>{name ? capitalize(name) : ''}</b>
                     </h1>
 
-                    <span className='text-dark_text_1'>
-                        Ringing...
-                    </span>
+                    {
+                        totalSecInCall === 0 ? (
+                            <span className='text-dark_text_1'>
+                                Ringing...
+                            </span>
+                        ) : null
+                    }
+                    
+                    <CallTimes
+                        totalSecInCall={totalSecInCall}
+                        setTotalSecInCall={setTotalSecInCall}
+                        callAccepted={callAccepted}
+                    />
                 </div>
             </div>
         </div>

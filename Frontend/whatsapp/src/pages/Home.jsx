@@ -39,10 +39,11 @@ function Home() {
 
     // call State
     const [call, setCall] = useState(callData);
-
-    const { receivingCall, callEnded, socketId } = call;
     const [callAccepted, setCallAccepted] = useState(false);
+    const [totalSecInCall, setTotalSecInCall] = useState(0);
+
     const [show, setShow] = useState(false);
+    const { receivingCall, callEnded, socketId } = call;
 
     // stream state
     const [stream, setStream] = useState();
@@ -73,7 +74,7 @@ function Home() {
         socket.on('end call', () => {
             setShow(false);
             setCall({ ...call, callEnded: true, receivingCall: false });
-            
+
             myVideo.current.srcObject = null;
             if (callAccepted) {
                 connectionRef?.current?.destroy();
@@ -243,6 +244,8 @@ function Home() {
                 answerCall={answerCall}
                 show={show}
                 endCall={endCall}
+                totalSecInCall={totalSecInCall}
+                setTotalSecInCall={setTotalSecInCall}
             />
         </>
     )

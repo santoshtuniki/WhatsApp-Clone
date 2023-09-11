@@ -14,6 +14,8 @@ function Call({
     answerCall,
     show,
     endCall,
+    totalSecInCall,
+    setTotalSecInCall
 }) {
     const { receivingCall, callEnded, name, picture } = call;
 
@@ -39,6 +41,8 @@ function Call({
                     <CallArea
                         name={name}
                         callAccepted={callAccepted}
+                        totalSecInCall={totalSecInCall}
+                        setTotalSecInCall={setTotalSecInCall}
                     />
 
                     {/*Call actions*/}
@@ -100,7 +104,7 @@ function Call({
             {/*calling ringtone*/}
             {
                 !callAccepted && show ? (
-                    <audio src="../../../../audio/ringing.mp3" autoPlay loop></audio>
+                    <audio src='../../../../audio/ringing.mp3' autoPlay loop></audio>
                 ) : null
             }
         </div>
