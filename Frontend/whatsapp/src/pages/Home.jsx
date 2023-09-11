@@ -42,6 +42,7 @@ function Home() {
 
     const { receivingCall, callEnded, socketId } = call;
     const [callAccepted, setCallAccepted] = useState(false);
+    const [show, setShow] = useState(false);
 
     // stream state
     const [stream, setStream] = useState();
@@ -49,6 +50,26 @@ function Home() {
     // references
     const myVideo = useRef();
     const userVideo = useRef();
+    const connectionRef = useRef();
+
+    // call useEffect
+    useEffect(() => {
+        setupMedia();
+        socket.on('setup socket', (id) => {
+            setCall({ ...call, socketId: id });
+        });
+
+        socket.on('call user', (data) => {
+            setCall({
+                ...call,
+                socketId: data.from,
+                name: data.name,
+                picture: data.picture,
+                signal: data.signal,
+                receivingCall: true,
+            });
+        });
+    }, [])
 
     // callUser function
     const callUser = () => {
@@ -75,11 +96,47 @@ function Home() {
                 picture: user.picture,
             });
         });
+
+        peer.on('stream', (stream) => {
+            userVideo.current.srcObject = stream;
+        });
+
+        socket.on('call accepted', (signal) => {
+            setCallAccepted(true);
+            peer.signal(signal);
+        });
+
+        connectionRef.current = peer;
     }
+
+    // answerCall function
+    const answerCall = () => {
+        enableMedia();
+        setCallAccepted(true);
+
+        const peer = new Peer({
+            initiator: false,
+            trickle: false,
+            stream: stream,
+        });
+
+        peer.on('signal', (data) => {
+            socket.emit('answer call', { signal: data, to: call.socketId });
+        });
+
+        peer.on('stream', (stream) => {
+            userVideo.current.srcObject = stream;
+        });
+
+        peer.signal(call.signal);
+
+        connectionRef.current = peer;
+    };
 
     // enableMedia function
     const enableMedia = () => {
         myVideo.current.srcObject = stream;
+        setShow(true);
     }
 
     // setupMedia function
@@ -90,25 +147,6 @@ function Home() {
                 setStream(stream);
             });
     }
-
-    // call useEffect
-    useEffect(() => {
-        setupMedia();
-        socket.on('setup socket', (id) => {
-            setCall({ ...call, socketId: id });
-        });
-
-        socket.on('call user', (data) => {
-            setCall({
-                ...call,
-                socketId: data.from,
-                name: data.name,
-                picture: data.picture,
-                signal: data.signal,
-                receivingCall: true,
-            });
-        });
-    }, [])
 
     //join user into the socket io
     useEffect(() => {
@@ -176,6 +214,8 @@ function Home() {
                 myVideo={myVideo}
                 userVideo={userVideo}
                 stream={stream}
+                answerCall={answerCall}
+                show={show}
             />
         </>
     )

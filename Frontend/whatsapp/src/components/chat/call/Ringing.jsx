@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 // component imports
 import { CloseIcon, ValidIcon } from '../../../svg';
 
-function Ringing({ call, setCall }) {
-    const { receivingCall, callEnded, socketId } = call;
+function Ringing({ call, setCall, answerCall }) {
+    const { receivingCall, callEnded, name, picture } = call;
 
     const [timer, setTimer] = useState(0);
 
@@ -36,13 +36,13 @@ function Ringing({ call, setCall }) {
                 {/*Call infos*/}
                 <div className='flex items-center gap-x-2'>
                     <img
-                        src='https://www.pokemongoplusplus.com/img/img-1.jpg'
+                        src={picture}
                         alt={`caller profile picture`}
                         className='w-28 h-28 rounded-full'
                     />
                     <div>
                         <h1 className='dark:text-white'>
-                            <b>Sai</b>
+                            <b>{name}</b>
                         </h1>
                         <span className='dark:text-dark_text_2'>Whatsapp video...</span>
                     </div>
@@ -55,7 +55,7 @@ function Ringing({ call, setCall }) {
                             <CloseIcon className='fill-white w-5' />
                         </button>
                     </li>
-                    <li>
+                    <li onClick={answerCall}>
                         <button className='w-8 h-8 flex items-center justify-center rounded-full bg-blue-500'>
                             <ValidIcon className='fill-white w-6 mt-2' />
                         </button>

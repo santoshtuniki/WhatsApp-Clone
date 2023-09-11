@@ -53,18 +53,22 @@ function SocketServer(socket, io) {
         socket.in(conversation).emit('stop typing');
     })
 
-    //call
-    //---call user
+    // call user
     socket.on('call user', (data) => {
         let userId = data.userToCall;
         let userSocket = onlineUsers.find((user) => user.userId == userId);
-        
+
         io.to(userSocket.socketId).emit('call user', {
             signal: data.signal,
             from: data.from,
             name: data.name,
             picture: data.picture,
         });
+    });
+
+    // answer call
+    socket.on('answer call', (data) => {
+        io.to(data.to).emit('call accepted', data.signal);
     });
 }
 

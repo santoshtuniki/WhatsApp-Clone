@@ -10,9 +10,11 @@ function Call({
     callAccepted,
     myVideo,
     userVideo,
-    stream
+    stream,
+    answerCall,
+    show,
 }) {
-    const { receivingCall, callEnded, socketId } = call;
+    const { receivingCall, callEnded, name, picture } = call;
 
     const [showActions, setShowActions] = useState(false);
     const [toggle, setToggle] = useState(false);
@@ -34,7 +36,8 @@ function Call({
 
                     {/*Call area*/}
                     <CallArea
-                        name='sneha'
+                        name={name}
+                        callAccepted={callAccepted}
                     />
 
                     {/*Call actions*/}
@@ -70,8 +73,9 @@ function Call({
                                     playsInline
                                     muted
                                     autoPlay
-                                    className={`${toggle ? 'largeVideoCall' : 'SmallVideoCall'} ${showActions ? 'moveVideoCall' : ''
-                                        }`}
+                                    className={
+                                        `${toggle ? 'largeVideoCall' : 'SmallVideoCall'} ${showActions ? 'moveVideoCall' : ''}`
+                                    }
                                     onClick={() => setToggle((prev) => !prev)}
                                 ></video>
                             </div>
@@ -86,8 +90,16 @@ function Call({
                     <Ringing
                         call={call}
                         setCall={setCall}
+                        answerCall={answerCall}
                     />
                 )
+            }
+
+            {/*calling ringtone*/}
+            {
+                !callAccepted && show ? (
+                    <audio src="../../../../audio/ringing.mp3" autoPlay loop></audio>
+                ) : null
             }
         </div>
     )
