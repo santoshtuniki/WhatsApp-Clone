@@ -6,9 +6,6 @@ import logger from '../configs/logger.config.js';
 import { doesConversationExist, createConversation, populateConversation, getUserConversations } from '../services/conversation.service.js';
 // import { findUser } from '../services/user.service.js';
 
-// env variable
-const { DEFAULT_GROUP_PICTURE } = process.env;
-
 // named exports
 export const create_open_conversation = async (req, res, next) => {
 
@@ -88,6 +85,9 @@ export const createGroup = async (req, res, next) => {
             'Atleast 2 users are required to start a group chat.'
         );
     }
+
+    // env variable
+    const { DEFAULT_GROUP_PICTURE } = process.env;
 
     let data = {
         name,

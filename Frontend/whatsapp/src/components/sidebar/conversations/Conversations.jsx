@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux';
 
 // component imports
-import Conversation from './Conversation';
+import { Conversation } from './index';
 import { checkOnlineStatus } from '../../../utils/chat';
 
 function Conversations({ onlineUsers, typing }) {

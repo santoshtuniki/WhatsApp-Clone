@@ -29,8 +29,8 @@ export const getConversations = createAsyncThunk('conversation/all', async (toke
 })
 
 export const open_create_conversation = createAsyncThunk('conversation/open_create', async (values, { rejectWithValue }) => {
-    const { token, receiver_id } = values;
-    const response = await postService(CONVERSATION_ENDPOINT, { receiver_id }, token, rejectWithValue);
+    const { token, receiver_id, isGroup } = values;
+    const response = await postService(CONVERSATION_ENDPOINT, { receiver_id, isGroup }, token, rejectWithValue);
     return response;
 })
 
