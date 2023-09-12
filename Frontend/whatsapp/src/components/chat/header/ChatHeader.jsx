@@ -9,8 +9,6 @@ import { getConversationPicture, getConversationName } from '../../../utils/chat
 function ChatHeader({ online, callUser }) {
     // Redux
     const { activeConversation } = useSelector((state) => state.chat);
-    const { name, picture } = activeConversation;
-
     const { user } = useSelector((state) => state.user);
 
     return (
@@ -50,7 +48,7 @@ function ChatHeader({ online, callUser }) {
                 {/* right */}
                 <ul className="flex items-center gap-x-2.5">
                     {
-                        1 == 1 ? (
+                        online ? (
                             <li onClick={() => callUser()}>
                                 <button className="btn">
                                     <VideoCallIcon />
@@ -59,7 +57,7 @@ function ChatHeader({ online, callUser }) {
                         ) : null
                     }
                     {
-                        1 == 1 ? (
+                        online ? (
                             <li>
                                 <button className="btn">
                                     <CallIcon />

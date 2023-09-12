@@ -61,7 +61,7 @@ function CreateGroup({ setShowCreateGroup }) {
 				users,
 				token,
 			};
-			let newConvo = await dispatch(createGroupConversation(values));
+			await dispatch(createGroupConversation(values));
 
 			setShowCreateGroup(false);
 		}

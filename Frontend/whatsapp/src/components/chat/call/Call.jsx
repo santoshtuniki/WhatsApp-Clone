@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // component imports
-import { Ringing, Header, CallArea, CallActions, CallVideo } from './index';
+import { Ringing, Header, CallArea, CallActions } from './index';
 
 function Call({
     call,
@@ -17,7 +17,7 @@ function Call({
     totalSecInCall,
     setTotalSecInCall
 }) {
-    const { receivingCall, callEnded, name, picture } = call;
+    const { receivingCall, callEnded, name } = call;
 
     const [showActions, setShowActions] = useState(false);
     const [toggle, setToggle] = useState(false);

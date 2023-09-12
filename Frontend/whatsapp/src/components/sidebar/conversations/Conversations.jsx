@@ -18,7 +18,7 @@ function Conversations({ onlineUsers, typing }) {
                             (convo) =>
                                 convo.latestMessage ||
                                 convo._id === activeConversation._id ||
-                                convo.isGroup == true
+                                convo.isGroup === true
                         )
                         .map((convo) => {
                             const check = checkOnlineStatus(onlineUsers, user, convo.users);

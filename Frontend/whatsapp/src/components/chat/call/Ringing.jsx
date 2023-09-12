@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { CloseIcon, ValidIcon } from '../../../svg';
 
 function Ringing({ call, setCall, answerCall, endCall }) {
-    const { receivingCall, callEnded, name, picture } = call;
+    const { name, picture } = call;
 
     const [timer, setTimer] = useState(0);
 
@@ -37,7 +37,7 @@ function Ringing({ call, setCall, answerCall, endCall }) {
                 <div className='flex items-center gap-x-2'>
                     <img
                         src={picture}
-                        alt={`caller profile picture`}
+                        alt=''
                         className='w-28 h-28 rounded-full'
                     />
                     <div>

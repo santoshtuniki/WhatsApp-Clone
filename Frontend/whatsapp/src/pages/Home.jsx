@@ -44,7 +44,7 @@ function Home() {
 
     const [show, setShow] = useState(false);
     const [error, setError] = useState('');
-    const { receivingCall, callEnded, socketId } = call;
+    const { socketId } = call;
 
     // stream state
     const [stream, setStream] = useState(null);
