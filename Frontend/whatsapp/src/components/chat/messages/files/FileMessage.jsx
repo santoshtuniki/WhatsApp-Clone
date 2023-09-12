@@ -13,6 +13,18 @@ function FileMessage({ FileMessage, message, me }) {
             {/*Message Container*/}
             <div className='relative'>
                 {/* sender user message */}
+                {
+                    !me && message.conversation.isGroup && (
+                        <div className='absolute top-0.5 left-[-37px]'>
+                            <img
+                                src={message.sender.picture}
+                                alt=''
+                                className='w-8 h-8 rounded-full'
+                            />
+                        </div>
+                    )
+                }
+
                 <div
                     className={
                         `relative h-full dark:text-dark_text_1 rounded-lg 
@@ -49,7 +61,7 @@ function FileMessage({ FileMessage, message, me }) {
                             </span>
                         ) : (
                             <span>
-                                <TraingleIcon 
+                                <TraingleIcon
                                     className={
                                         `${file.public_id.split('.')[1] === 'png' ? 'dark:fill-white top-[-4.7px] -right-2.5' : 'dark:fill-green_3 top-[-5.9px] -right-3'} 
                                         rotate-[60deg] absolute  

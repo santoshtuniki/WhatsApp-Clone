@@ -5,29 +5,51 @@ import createHttpError from 'http-errors';
 import { ConversationModel, UserModel } from '../models/index.js';
 
 // named exports
-export const doesConversationExist = async (sender_id, receiver_id) => {
-    let conversation = await ConversationModel.find({
-        isGroup: false,
-        $and: [
-            { users: { $elemMatch: { $eq: sender_id } } },
-            { users: { $elemMatch: { $eq: receiver_id } } }
-        ]
-    })
-        .populate('users', '-password')
-        .populate('latestMessage');
+export const doesConversationExist = async (sender_id, receiver_id, isGroup) => {
+    // if not a GroupChat
+    if (isGroup === false) {
+        let conversation = await ConversationModel.find({
+            isGroup: false,
+            $and: [
+                { users: { $elemMatch: { $eq: sender_id } } },
+                { users: { $elemMatch: { $eq: receiver_id } } }
+            ]
+        })
+            .populate('users', '-password')
+            .populate('latestMessage');
 
-    // check if conversation exists
-    if (!conversation)
-        throw createHttpError.BadRequest('Oops... Something went wrong!');
+        // check if conversation exists
+        if (!conversation)
+            throw createHttpError.BadRequest('Oops... Something went wrong!');
 
-    // populate message model
-    conversation = await UserModel.populate(conversation, {
-        path: 'latestMessage.sender',
-        select: 'name email picture status',
-    })
+        // populate message model
+        conversation = await UserModel.populate(conversation, {
+            path: 'latestMessage.sender',
+            select: 'name email picture status',
+        })
 
-    // return
-    return conversation[0];
+        // return
+        return conversation[0];
+
+    } else {
+        // it's a group chat
+        let conversation = await ConversationModel.findById(isGroup)
+            .populate('users admin', '-password')
+            .populate('latestMessage');
+
+        // check if conversation exists
+        if (!conversation)
+            throw createHttpError.BadRequest('Oops...Something went wrong !');
+
+        //populate message model
+        conversation = await UserModel.populate(conversation, {
+            path: 'latestMessage.sender',
+            select: 'name email picture status',
+        });
+
+        // return
+        return conversation;
+    }
 
 }
 
@@ -94,7 +116,7 @@ export const updateLatestMessage = async (id, message) => {
     // check if updatedConversation exists
     if (!updatedConversation)
         throw createHttpError.BadRequest('Oops... Something went wrong!');
-    
+
     // return 
     return updatedConversation;
 }

@@ -14,14 +14,19 @@ function Conversations({ onlineUsers, typing }) {
             <ul>
                 {
                     conversations && conversations
-                        .filter((convo) => convo.latestMessage || convo._id === activeConversation._id)
+                        .filter(
+                            (convo) =>
+                                convo.latestMessage ||
+                                convo._id === activeConversation._id ||
+                                convo.isGroup == true
+                        )
                         .map((convo) => {
                             const check = checkOnlineStatus(onlineUsers, user, convo.users);
                             return (
                                 <Conversation
                                     key={convo._id}
                                     convo={convo}
-                                    online={check ? true : false}
+                                    online={!convo.isGroup && check ? true : false}
                                     typing={typing}
                                 />
                             )

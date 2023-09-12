@@ -34,25 +34,29 @@ function ChatMessages({ typing }) {
                     messages && messages.map((message, index) => (
                         <div key={index}>
                             {/*Message files */}
-                            {message.files.length > 0
-                                ? message.files.map((file) => (
-                                    <FileMessage
-                                        FileMessage={file}
+                            {
+                                message.files.length > 0
+                                    ? message.files.map((file) => (
+                                        <FileMessage
+                                            FileMessage={file}
+                                            message={message}
+                                            key={message._id}
+                                            me={user._id === message.sender._id}
+                                        />
+                                    ))
+                                    : null
+                            }
+
+                            {/*Message text*/}
+                            {
+                                message.message.length > 0 ? (
+                                    <Message
                                         message={message}
                                         key={message._id}
                                         me={user._id === message.sender._id}
                                     />
-                                ))
-                                : null}
-
-                            {/*Message text*/}
-                            {message.message.length > 0 ? (
-                                <Message
-                                    message={message}
-                                    key={message._id}
-                                    me={user._id === message.sender._id}
-                                />
-                            ) : null}
+                                ) : null
+                            }
                         </div>
                     ))
                 }

@@ -43,10 +43,11 @@ function Home() {
     const [totalSecInCall, setTotalSecInCall] = useState(0);
 
     const [show, setShow] = useState(false);
+    const [error, setError] = useState('');
     const { receivingCall, callEnded, socketId } = call;
 
     // stream state
-    const [stream, setStream] = useState();
+    const [stream, setStream] = useState(null);
 
     // references
     const myVideo = useRef();
@@ -75,7 +76,10 @@ function Home() {
             setShow(false);
             setCall({ ...call, callEnded: true, receivingCall: false });
 
-            myVideo.current.srcObject = null;
+            if (myVideo.current) {
+                myVideo.current.srcObject = null;
+            }
+
             if (callAccepted) {
                 connectionRef?.current?.destroy();
             }
@@ -84,64 +88,76 @@ function Home() {
 
     // callUser function
     const callUser = () => {
-        enableMedia();
-        setCall({
-            ...call,
-            name: getConversationName(user, activeConversation.users),
-            picture: getConversationPicture(user, activeConversation.users),
-        });
-
-        // peer
-        const peer = new Peer({
-            initiator: true,
-            trickle: false,
-            stream: stream,
-        });
-
-        peer.on('signal', (data) => {
-            socket.emit('call user', {
-                userToCall: getConversationId(user, activeConversation.users),
-                signal: data,
-                from: socketId,
-                name: user.name,
-                picture: user.picture,
+        if (stream === null) {
+            alert(error);
+        } else {
+            enableMedia();
+            setCall({
+                ...call,
+                name: getConversationName(user, activeConversation.users),
+                picture: getConversationPicture(user, activeConversation.users),
             });
-        });
 
-        peer.on('stream', (stream) => {
-            userVideo.current.srcObject = stream;
-        });
+            // peer
+            const peer = new Peer({
+                initiator: true,
+                trickle: false,
+                stream: stream,
+            });
 
-        socket.on('call accepted', (signal) => {
-            setCallAccepted(true);
-            peer.signal(signal);
-        });
+            peer.on('signal', (data) => {
+                socket.emit('call user', {
+                    userToCall: getConversationId(user, activeConversation.users),
+                    signal: data,
+                    from: socketId,
+                    name: user.name,
+                    picture: user.picture,
+                });
+            });
 
-        connectionRef.current = peer;
+            peer.on('stream', (stream) => {
+                if (userVideo.current) {
+                    userVideo.current.srcObject = stream;
+                }
+            });
+
+            socket.on('call accepted', (signal) => {
+                setCallAccepted(true);
+                peer.signal(signal);
+            });
+
+            connectionRef.current = peer;
+        }
     }
 
     // answerCall function
     const answerCall = () => {
-        enableMedia();
-        setCallAccepted(true);
+        if (stream === null) {
+            alert(error);
+        } else {
+            enableMedia();
+            setCallAccepted(true);
 
-        const peer = new Peer({
-            initiator: false,
-            trickle: false,
-            stream: stream,
-        });
+            const peer = new Peer({
+                initiator: false,
+                trickle: false,
+                stream: stream,
+            });
 
-        peer.on('signal', (data) => {
-            socket.emit('answer call', { signal: data, to: call.socketId });
-        });
+            peer.on('signal', (data) => {
+                socket.emit('answer call', { signal: data, to: call.socketId });
+            });
 
-        peer.on('stream', (stream) => {
-            userVideo.current.srcObject = stream;
-        });
+            peer.on('stream', (stream) => {
+                if (userVideo.current) {
+                    userVideo.current.srcObject = stream;
+                }
+            });
 
-        peer.signal(call.signal);
+            peer.signal(call.signal);
 
-        connectionRef.current = peer;
+            connectionRef.current = peer;
+        }
     };
 
     // endCall  function
@@ -153,7 +169,9 @@ function Home() {
             receivingCall: false
         });
 
-        myVideo.current.srcObject = null;
+        if (myVideo.current) {
+            myVideo.current.srcObject = null;
+        }
 
         socket.emit('end call', call.socketId);
 
@@ -162,7 +180,9 @@ function Home() {
 
     // enableMedia function
     const enableMedia = () => {
-        myVideo.current.srcObject = stream;
+        if (myVideo.current) {
+            myVideo.current.srcObject = stream;
+        }
         setShow(true);
     }
 
@@ -172,6 +192,22 @@ function Home() {
             .getUserMedia({ video: true, audio: true })
             .then((stream) => {
                 setStream(stream);
+            })
+            .catch((error) => {
+                // Handle the error here
+                if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+                    // The requested device was not found
+                    setError('The device you requested was not found.');
+                } else if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                    // The user denied permission to access the device
+                    setError('Permission to access the device was denied by the user.');
+                } else if (error.name === 'OverconstrainedError' || error.name === 'ConstraintNotSatisfiedError') {
+                    // The requested constraints were not satisfied
+                    setError('The requested constraints were not satisfied by any available devices.');
+                } else {
+                    // Handle other errors
+                    setError('An error occurred while trying to access the device: ' + error.message);
+                }
             });
     }
 
@@ -234,19 +270,21 @@ function Home() {
             </div>
 
             {/* Call */}
-            <Call
-                call={call}
-                setCall={setCall}
-                callAccepted={callAccepted}
-                myVideo={myVideo}
-                userVideo={userVideo}
-                stream={stream}
-                answerCall={answerCall}
-                show={show}
-                endCall={endCall}
-                totalSecInCall={totalSecInCall}
-                setTotalSecInCall={setTotalSecInCall}
-            />
+            <div className={(show || call.signal) && !call.callEnded ? '' : 'hidden'}>
+                <Call
+                    call={call}
+                    setCall={setCall}
+                    callAccepted={callAccepted}
+                    myVideo={myVideo}
+                    userVideo={userVideo}
+                    stream={stream}
+                    answerCall={answerCall}
+                    show={show}
+                    endCall={endCall}
+                    totalSecInCall={totalSecInCall}
+                    setTotalSecInCall={setTotalSecInCall}
+                />
+            </div>
         </>
     )
 }

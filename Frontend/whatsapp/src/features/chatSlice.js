@@ -46,6 +46,12 @@ export const sendMessage = createAsyncThunk('message/send', async (values, { rej
     return response;
 })
 
+export const createGroupConversation = createAsyncThunk('conversation/create_group', async (values, { rejectWithValue }) => {
+    const { token, name, users } = values;
+    const response = await postService(`${CONVERSATION_ENDPOINT}/group`, { name, users }, token, rejectWithValue);
+    return response;
+})
+
 // chatSlice
 const chatSlice = createSlice({
     name: 'chat',

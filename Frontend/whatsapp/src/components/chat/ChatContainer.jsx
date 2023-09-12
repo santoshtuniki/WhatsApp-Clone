@@ -36,7 +36,11 @@ function ChatContainer({ onlineUsers, typing, callUser }) {
             <div>
                 {/* Chat header */}
                 <ChatHeader
-                    online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
+                    online={
+                        activeConversation.isGroup
+                            ? false
+                            : checkOnlineStatus(onlineUsers, user, activeConversation.users)
+                    }
                     callUser={callUser}
                 />
                 {
